@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dk5d7i6wlpqkr"
+path="res://.godot/imported/Cascada de coagulación.mp3-92ee5cb264f835966da8f1c71dac73e6.mp3str"
+
+[deps]
+
+source_file="res://sound/music/Cascada de coagulación.mp3"
+dest_files=["res://.godot/imported/Cascada de coagulación.mp3-92ee5cb264f835966da8f1c71dac73e6.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
