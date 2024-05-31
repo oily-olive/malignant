@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://co00pb60qc51s"]
+
+[ext_resource type="PackedScene" uid="uid://coygjw43iv5f3" path="res://scenes/utilities/spawner.tscn" id="1_kiybt"]
+[ext_resource type="PackedScene" uid="uid://ddg1hwbx1w5xl" path="res://scenes/character.tscn" id="2_3qnoe"]
+
+[node name="player_spawner" type="Node3D"]
+
+[node name="spawner" parent="." instance=ExtResource("1_kiybt")]
+thing_to_spawn = ExtResource("2_3qnoe")
+spawns_immediately = true
+add_to_scene = true

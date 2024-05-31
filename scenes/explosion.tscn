@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://babocgvx6ksry"]
+
+[ext_resource type="Script" path="res://scripts/explosion.gd" id="1_aoarf"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_gtgn4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_16p6n"]
+transparency = 1
+albedo_color = Color(1, 1, 0, 1)
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_s31vk"]
+material = SubResource("StandardMaterial3D_16p6n")
+radial_segments = 8
+rings = 4
+
+[node name="Area3D" type="Area3D"]
+script = ExtResource("1_aoarf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_gtgn4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_s31vk")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

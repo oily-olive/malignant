@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://fl53pc5tevjw"]
+
+[ext_resource type="Script" path="res://scripts/text_display_area.gd" id="1_rxdhg"]
+[ext_resource type="AudioStream" uid="uid://de3bf12abxsyp" path="res://sound/sfx/text.wav" id="3_j8gxd"]
+
+[node name="text_display_area" type="Area3D"]
+collision_layer = 0
+script = ExtResource("1_rxdhg")
+
+[node name="sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_j8gxd")
+
+[node name="text_display_root" type="Node3D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
