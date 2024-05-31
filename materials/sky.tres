@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://j1w2ku6e1lvj"]
+
+[ext_resource type="Material" uid="uid://ckfggkfyj815r" path="res://materials/blood_clouds_material.tres" id="1_gqhwa"]
+[ext_resource type="Texture2D" uid="uid://cjjwhkkcira4f" path="res://materials/sky_texture.tres" id="2_g38yd"]
+
+[resource]
+next_pass = ExtResource("1_gqhwa")
+albedo_texture = ExtResource("2_g38yd")

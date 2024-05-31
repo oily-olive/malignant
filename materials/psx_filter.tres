@@ -1,0 +1,18 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dw6webk13k0hj"]
+
+[ext_resource type="Shader" path="res://materials/shaders/psx_filter.gdshader" id="1_mq6yq"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_mq6yq")
+shader_parameter/enable_fog = false
+shader_parameter/fog_color = Color(1, 0.6, 0.541176, 1)
+shader_parameter/noise_color = Color(0, 0, 0, 1)
+shader_parameter/fog_distance = 25.0
+shader_parameter/fog_fade_range = 1.0
+shader_parameter/enable_noise = false
+shader_parameter/noise_time_fac = 4.0
+shader_parameter/enable_color_limitation = true
+shader_parameter/color_levels = 64
+shader_parameter/enable_dithering = true
+shader_parameter/dither_strength = 0.3
