@@ -34,7 +34,7 @@ var shotgun_damage
 var is_sliding = false
 var is_slamming = false
 var slam_hit = false
-var jump_add = true
+var jump_add = false
 var melee_charge = 0.0
 var melee_is_charged = false
 var damage_since_last_shotgun_reload = 0.0
@@ -106,13 +106,75 @@ func _unhandled_input(event): # Window Activity and Camera Movement
 			cam.rotate_x(-event.relative.y * MOUSE_SENSITIVITY * time_s)
 			cam.rotation.x = clamp(cam.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 
-func _ready():
-	pass
-	#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+var _was_on_floor_last_frame = false
+var _snapped_to_stairs_last_frame = false
+func _snap_down_to_stairs_check():
+	var did_snap = false
+	if not is_on_floor() and velocity.y <= 0 and (_was_on_floor_last_frame or _snapped_to_stairs_last_frame) and $StairsBelowRayCast3D.is_colliding():
+		var body_test_result = PhysicsTestMotionResult3D.new()
+		var params = PhysicsTestMotionParameters3D.new()
+		var max_step_down = -0.5
+		params.from = self.global_transform
+		params.motion = Vector3(0,max_step_down,0)
+		if PhysicsServer3D.body_test_motion(self.get_rid(), params, body_test_result):
+			var translate_y = body_test_result.get_travel().y
+			self.position.y += translate_y
+			apply_floor_snap()
+			did_snap = true
+
+	_was_on_floor_last_frame = is_on_floor()
+	_snapped_to_stairs_last_frame = did_snap
+	
+@onready var _initial_separation_ray_dist = abs($StepUpSeparationRay_F.position.z)
+var _last_xz_vel : Vector3 = Vector3(0,0,0)
+func _rotate_step_up_separation_ray():
+	var xz_vel = velocity * Vector3(1,0,1)
+	
+	if xz_vel.length() < 0.1:
+		xz_vel = _last_xz_vel
+	else:
+		_last_xz_vel = xz_vel
+		
+	var xz_f_ray_pos = xz_vel.normalized() * _initial_separation_ray_dist
+	$StepUpSeparationRay_F.global_position.x = self.global_position.x + xz_f_ray_pos.x
+	$StepUpSeparationRay_F.global_position.z = self.global_position.z + xz_f_ray_pos.z
+
+	var xz_l_ray_pos = xz_f_ray_pos.rotated(Vector3(0,1.0,0), deg_to_rad(-50))
+	$StepUpSeparationRay_L.global_position.x = self.global_position.x + xz_l_ray_pos.x
+	$StepUpSeparationRay_L.global_position.z = self.global_position.z + xz_l_ray_pos.z
+	
+	var xz_r_ray_pos = xz_f_ray_pos.rotated(Vector3(0,1.0,0), deg_to_rad(50))
+	$StepUpSeparationRay_R.global_position.x = self.global_position.x + xz_r_ray_pos.x
+	$StepUpSeparationRay_R.global_position.z = self.global_position.z + xz_r_ray_pos.z
+	
+	# To prevent character from running up walls, we do a check for how steep
+	# the slope in contact with our separation rays is
+	$StepUpSeparationRay_F/RayCast3D.force_raycast_update()
+	$StepUpSeparationRay_L/RayCast3D.force_raycast_update()
+	$StepUpSeparationRay_R/RayCast3D.force_raycast_update()
+	var max_slope_ang_dot = Vector3(0,1,0).rotated(Vector3(1.0,0,0), self.floor_max_angle).dot(Vector3(0,1,0))
+	var any_too_steep = false
+	if $StepUpSeparationRay_F/RayCast3D.is_colliding() and $StepUpSeparationRay_F/RayCast3D.get_collision_normal().dot(Vector3(0,1,0)) < max_slope_ang_dot:
+		any_too_steep = true
+	if $StepUpSeparationRay_L/RayCast3D.is_colliding() and $StepUpSeparationRay_L/RayCast3D.get_collision_normal().dot(Vector3(0,1,0)) < max_slope_ang_dot:
+		any_too_steep = true
+	if $StepUpSeparationRay_R/RayCast3D.is_colliding() and $StepUpSeparationRay_R/RayCast3D.get_collision_normal().dot(Vector3(0,1,0)) < max_slope_ang_dot:
+		any_too_steep = true
+	
+	$StepUpSeparationRay_F.disabled = any_too_steep
+	$StepUpSeparationRay_L.disabled = any_too_steep
+	$StepUpSeparationRay_R.disabled = any_too_steep
+	
+var _cur_frame = 0
+@export var _jump_frame_grace = 5
+var _last_frame_was_on_floor = -_jump_frame_grace - 1
+
 var just_landed: bool = false
+var already_jumped: bool = false
 func _physics_process(delta):
 	var velocityClamped = clamp(velocity.length(), 0.0, SPRINT_SPEED * MOVE_SPEED * 100000)
 	
+	_cur_frame += 1
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 		is_sliding = false
@@ -128,25 +190,32 @@ func _physics_process(delta):
 	$CameraRoot2D/ui_container_bottomleft/HPLabel.text = "HP: " + str(int(HP))
 
 	if is_on_floor():
+		_last_frame_was_on_floor = _cur_frame
 		if amount_rotated != 0.0:
 			reset_rotation_counter()
 		WALL_JUMP_COUNTER = 4
 		is_slamming = false
-		if Input.is_action_just_pressed("jump"):
-			if is_sliding == false and !jump_add:
-				velocity.y += 6.5
-			if is_sliding == true and STAMINA >= 20.0:
-				velocity.y = 6.5
-				STAMINA -= 20.0
-		if Input.is_action_pressed("jump"):
-			if is_sliding == false:
-				velocity.y += 6.5
-				if jump_add:
-					velocity.y += 13
 		if just_landed:
 			reset_jump()
 			just_landed = false
-			
+		already_jumped = false
+	if Input.is_action_just_pressed("jump") and (is_on_floor() or _cur_frame - _last_frame_was_on_floor <= _jump_frame_grace) and !already_jumped:
+			if is_sliding == false:
+				velocity.y += 13
+				if jump_add:
+					velocity.y += 6.5
+				already_jumped = true
+			if is_sliding == true and STAMINA >= 20.0:
+				velocity.y = 6.5
+				STAMINA -= 20.0
+				already_jumped = true
+	if Input.is_action_pressed("jump") and (is_on_floor() or _cur_frame - _last_frame_was_on_floor <= _jump_frame_grace) and !already_jumped:
+		if is_sliding == false:
+			velocity.y += 6.5
+			if jump_add:
+				velocity.y += 13
+			already_jumped = true
+	
 	if Engine.time_scale != 0.0:
 		if is_sliding == true or $CollisionShape3D2/RayCast3D.is_colliding():
 			cam.set_position(Vector3(0, -0.631, 0))
@@ -222,6 +291,11 @@ func _physics_process(delta):
 		cam.transform.origin = headbob(t_bob)
 		$CollisionShape3D.shape.height = 2
 	
+	if is_slamming:
+		if $slam_check.is_colliding():
+			if $slam_check.get_collider().is_in_group("breakable_object"):
+				$slam_check.get_collider().break_o()
+	
 	#weapon handling
 	if WEAPON > 3:
 		WEAPON = 1
@@ -287,7 +361,9 @@ func _physics_process(delta):
 	var targetFov = BASE_FOV + (FOV_MULTIPLIER * velocityClamped * 0.75)
 	cam.fov = lerp(cam.fov, targetFov, delta * 8)
 	
+	_rotate_step_up_separation_ray()
 	move_and_slide()
+	_snap_down_to_stairs_check()
 	
 	if Engine.time_scale != 0.0:
 	#concentration

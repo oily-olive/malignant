@@ -4,7 +4,7 @@ extends Control
 @onready var start_button = $MarginContainer/HBoxContainer/VBoxContainer/start_button as Button
 @onready var start_button2 = $MarginContainer/HBoxContainer/VBoxContainer/start_button2 as Button
 @onready var exit_button = $MarginContainer/HBoxContainer/VBoxContainer/exit_button as Button
-@onready var testworld = load("res://scenes/testworld.tscn") as PackedScene
+@onready var tutorial = load("res://scenes/tutorial_level.tscn") as PackedScene
 @onready var test_dungeon = load("res://scenes/test_dungeon.tscn") as PackedScene
 @onready var music = $music as AudioStreamPlayer
 @onready var camera = $background/Camera3D as Camera3D
@@ -25,7 +25,7 @@ func _ready():
 	exit_button.button_down.connect(leave)
 
 func start_testworld() -> void:
-	get_tree().change_scene_to_packed(testworld)
+	get_tree().change_scene_to_packed(tutorial)
 
 func start_testdungeon() -> void:
 	get_tree().change_scene_to_packed(test_dungeon)
