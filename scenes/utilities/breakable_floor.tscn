@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://ccu4uniukr2ly"]
+
+[ext_resource type="Material" uid="uid://od10klameia5" path="res://materials/placeholder128712.tres" id="1_bjkrp"]
+[ext_resource type="Script" path="res://scripts/breakable_floor.gd" id="2_53kt8"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_lhokk"]
+material = ExtResource("1_bjkrp")
+size = Vector3(4, 0.5, 4)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_bimsi"]
+data = PackedVector3Array(-2, 0.25, 2, 2, 0.25, 2, -2, -0.25, 2, 2, 0.25, 2, 2, -0.25, 2, -2, -0.25, 2, 2, 0.25, -2, -2, 0.25, -2, 2, -0.25, -2, -2, 0.25, -2, -2, -0.25, -2, 2, -0.25, -2, 2, 0.25, 2, 2, 0.25, -2, 2, -0.25, 2, 2, 0.25, -2, 2, -0.25, -2, 2, -0.25, 2, -2, 0.25, -2, -2, 0.25, 2, -2, -0.25, -2, -2, 0.25, 2, -2, -0.25, 2, -2, -0.25, -2, 2, 0.25, 2, -2, 0.25, 2, 2, 0.25, -2, -2, 0.25, 2, -2, 0.25, -2, 2, 0.25, -2, -2, -0.25, 2, 2, -0.25, 2, -2, -0.25, -2, 2, -0.25, 2, 2, -0.25, -2, -2, -0.25, -2)
+
+[node name="breakable_floor" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_lhokk")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" groups=["breakable_object"]]
+script = ExtResource("2_53kt8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_bimsi")
