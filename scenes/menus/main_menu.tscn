@@ -77,7 +77,8 @@ layout_mode = 2
 custom_minimum_size = Vector2(180, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
-text = "start test world"
+text = "start tutorial
+"
 
 [node name="start_button2" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(475, 100)
