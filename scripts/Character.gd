@@ -53,14 +53,14 @@ var dead: bool = false
 @onready var raycastEnd_db_l := $CameraRoot/Camera3D/hitscan_07/hitscan_end as Node3D
 @onready var cross_c := $CameraRoot/Camera3D/hitscan_01/crossover_checkas as RayCast3D
 @onready var stepsound := $walk_sound as AudioStreamPlayer3D
-@onready var gun1 := $CameraRoot/Camera3D/plchld_revolver_better
-@onready var gun2 := $CameraRoot/Camera3D/double_shotty
-@onready var gun3 := $CameraRoot/Camera3D/new_shotgun
+@onready var revolver := $CameraRoot/Camera3D/plchld_revolver_better
+@onready var shotgun := $CameraRoot/Camera3D/new_shotgun
 @onready var ch := $CameraRoot2D/ui_container_center/crosshair
 @onready var cam_d := $CameraRoot/Camera3D/cam_direction as Node3D
 @onready var melee_area = $CameraRoot/Camera3D/melee_area as Area3D
 
 @onready var pop_up_text = $CameraRoot2D/pop_up_container/pop_up_text as Label
+@onready var weapon_handler = $CameraRoot/Camera3D/weapon_handler as WeaponHandler
 
 # bullet variables
 var instanceBullet_s
@@ -297,6 +297,7 @@ func _physics_process(delta):
 				$slam_check.get_collider().break_o()
 	
 	#weapon handling
+	weapon_handler.handle_weapons(WEAPON)
 	if WEAPON > 3:
 		WEAPON = 1
 	if WEAPON < 1:
@@ -310,32 +311,24 @@ func _physics_process(delta):
 	if shotAMMO == 0:
 		reload_revshotgun()
 	if WEAPON == 1:
-		ch.frame = 0
-		gun1.visible = true
-		gun2.visible = false
-		gun3.visible = false
-	elif WEAPON == 2:
-		ch.frame = 1
-		gun1.visible = false
-		gun2.visible = true
-		gun3.visible = false
-	elif WEAPON == 3:
-		ch.frame = 5
-		gun1.visible = false
-		gun2.visible = false
-		gun3.visible = true
-	
-	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		if WEAPON == 1:
+		if weapon_handler.get_visible_weapon() == revolver:
 			shoot_revolver()
 			revolver_special()
-		if WEAPON == 2:
-			shoot_doublebarrel()
-			dbshotgun_switch()
-		if WEAPON == 3:
+		if weapon_handler.get_visible_weapon() == shotgun:
 			shoot_revshotgun()
-		if Input.is_action_pressed("secondaryFire") and WEAPON == 3 and shotAMMO != 5:
-			reload_revshotgun()
+			revshotgun_alt()
+	elif WEAPON == 2:
+		pass
+	elif WEAPON == 3:
+		if weapon_handler.get_visible_weapon() == revolver:
+			shoot_revolver()
+			revolver_special()
+		if weapon_handler.get_visible_weapon() == shotgun:
+			shoot_revshotgun()
+			revshotgun_alt()
+	
+	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+		#insert weapon handling here
 		if Input.is_action_pressed("tertiaryFire"):
 			#hitstop_standard()
 			pass
@@ -513,7 +506,36 @@ func reload_revshotgun():
 		shotAMMO = 3
 		damage_since_last_shotgun_reload = 0.0
 		
-
+func revshotgun_alt():
+	if Input.is_action_pressed("secondaryFire"):
+		await get_tree().create_timer(1.0).timeout
+		if Input.is_action_pressed("secondaryFire"):
+			if shotAMMO != 0:
+				if !shottyAnim.is_playing():
+					shottyAnim.play("recoil")
+					hitscan(raycast_r, rsBarrel, raycastEnd_r, ((damage_since_last_shotgun_reload + 1.0) / ammo_alternation()) + abs(amount_rotated), true, true, true)
+					var basis_x = cam.rotation_degrees.x
+					var vector_y = (-1 * (basis_x * (10.0 / 9.0))) / 100.0
+					var vector_z = abs((((abs(basis_x)) * (10.0 / 9.0)) / 100.0) - 1)
+					var gun_direction = neck.transform.basis * Vector3(0,vector_y,vector_z)
+					var newvelocity = lerp(velocity, gun_direction * (((damage_since_last_shotgun_reload + 1.0) / ammo_alternation()) * 6.0 + 1), 1)
+					velocity += newvelocity
+					shotAMMO = 0
+func ammo_alternation():
+	if revAMMO == 6:
+		return 0.5
+	elif revAMMO == 5:
+		return 1.0
+	elif revAMMO == 4:
+		return 1.5
+	elif revAMMO == 3:
+		return 2.0
+	elif revAMMO == 2:
+		return 2.5
+	elif revAMMO == 1:
+		return 3.0
+	else:
+		return 0.000000000000000000000000000000000000000000000000000000000000000001 #if someone can figure out how to get the ammo count to a value other than the intended ones they deserve a little treat
 #style
 func style_timeout():
 	STYLE_TIMEOUT = STYLE_TIMEOUT + (20.0 / (COMBO))
