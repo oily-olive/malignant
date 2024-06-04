@@ -1,4 +1,4 @@
-[gd_scene load_steps=102 format=3 uid="uid://cvxqpjsnrp7c0"]
+[gd_scene load_steps=103 format=3 uid="uid://cvxqpjsnrp7c0"]
 
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/nodes/cyclops_block.gd" id="1_5tpga"]
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/resources/convex_block_data.gd" id="2_nb1fc"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ddg1hwbx1w5xl" path="res://scenes/character.tscn" id="3_ec2cu"]
 [ext_resource type="PackedScene" uid="uid://fl53pc5tevjw" path="res://scenes/utilities/text_display_area.tscn" id="5_646y2"]
 [ext_resource type="Environment" uid="uid://ct1wbiin0lxlg" path="res://environments/testworld.tres" id="6_biunj"]
+[ext_resource type="PackedScene" uid="uid://1uyqjcc04knm" path="res://scenes/revolver_pickup.tscn" id="7_r06cm"]
 
 [sub_resource type="Resource" id="Resource_40obx"]
 script = ExtResource("2_nb1fc")
@@ -3061,3 +3062,6 @@ shape = SubResource("BoxShape3D_0h82m")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("6_biunj")
+
+[node name="revolver_pickup" parent="." instance=ExtResource("7_r06cm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, -9, -4)

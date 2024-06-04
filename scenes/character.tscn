@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://ddg1hwbx1w5xl"]
+[gd_scene load_steps=21 format=3 uid="uid://ddg1hwbx1w5xl"]
 
 [ext_resource type="Script" path="res://scripts/Character.gd" id="1_k2cq5"]
 [ext_resource type="PackedScene" uid="uid://c7ejmxrhcb08p" path="res://scenes/new_revolver_good.tscn" id="2_t7emm"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cdank381erh0u" path="res://scenes/double_shotty.tscn" id="4_pyyou"]
 [ext_resource type="Material" uid="uid://dw6webk13k0hj" path="res://materials/psx_filter.tres" id="5_loits"]
 [ext_resource type="LabelSettings" uid="uid://c6i5e62bqc3jv" path="res://label thingies/font1.tres" id="6_6cijo"]
+[ext_resource type="Script" path="res://scripts/weapon_handler.gd" id="6_a5a7g"]
 [ext_resource type="Texture2D" uid="uid://cyn03qprx6lvf" path="res://sprites/crosshairs.png" id="7_xtelh"]
 [ext_resource type="AudioStream" uid="uid://sx888bs81l4" path="res://sound/sfx/jump_impact_2.wav" id="8_5ooss"]
 [ext_resource type="Material" uid="uid://cveieyb35bc3x" path="res://materials/placeholder.tres" id="9_111fw"]
@@ -110,6 +111,9 @@ shape = SubResource("BoxShape3D_aq0is")
 
 [node name="cam_direction" type="Node3D" parent="CameraRoot/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+
+[node name="weapon_handler" type="Node3D" parent="CameraRoot/Camera3D"]
+script = ExtResource("6_a5a7g")
 
 [node name="CameraRoot2D" type="Node2D" parent="."]
 
