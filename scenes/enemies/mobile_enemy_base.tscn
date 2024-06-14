@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cn617gqpudgpd"]
+
+[ext_resource type="Script" path="res://scripts/MobileEnemyBase.gd" id="1_avgvq"]
+
+[node name="Enemy" type="CharacterBody3D"]
+script = ExtResource("1_avgvq")
