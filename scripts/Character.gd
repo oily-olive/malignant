@@ -22,7 +22,7 @@ var WEAPON = 1
 var BOOST_DURATION = 0.0
 var db_firemode = 0
 var revAMMO = 6
-var shotAMMO = 3
+var shotAMMO = 6
 var SCORE = 0
 var STYLE = 0.0
 var STYLE_TIMEOUT = 0.0
@@ -201,7 +201,7 @@ func _physics_process(delta):
 		already_jumped = false
 	if Input.is_action_just_pressed("jump") and (is_on_floor() or _cur_frame - _last_frame_was_on_floor <= _jump_frame_grace) and !already_jumped:
 			if is_sliding == false:
-				velocity.y += 13
+				velocity.y += 10
 				if jump_add:
 					velocity.y += 6.5
 				already_jumped = true
@@ -257,24 +257,16 @@ func _physics_process(delta):
 			initiate_slide(direction)
 		if direction:
 			if is_sliding == false:
-				if is_on_floor():
-					
-					#if stepsound.playing == false and (velocity.x != 0 or velocity.z != 0):
-						#stepsound.pitch_scale = velocityClamped/10
-						#stepsound.play()
-					if Input.is_action_pressed("sprint") and STAMINA > 0: #and abs(velocity) <= abs(direction * (SPRINT_SPEED * (MOVE_SPEED * SPEED_BOOST))) + Vector3(1,0,1):
-						velocity.x = lerp(velocity.x, direction.x * (SPRINT_SPEED * (MOVE_SPEED * SPEED_BOOST)), delta * 3.5)
-						velocity.z = lerp(velocity.z, direction.z * (SPRINT_SPEED * (MOVE_SPEED * SPEED_BOOST)), delta * 3.5)
-						#velocity += (direction * (SPRINT_SPEED * (MOVE_SPEED * SPEED_BOOST)))/3.5
-						STAMINA = STAMINA - 0.5
-					else: #abs(velocity) <= abs(direction * (MOVE_SPEED * SPEED_BOOST)) + Vector3(1,0,1):
-						velocity.x = lerp(velocity.x, direction.x * (MOVE_SPEED * SPEED_BOOST), delta * 7.0)
-						velocity.z = lerp(velocity.z, direction.z * (MOVE_SPEED * SPEED_BOOST), delta * 7.0)
-						#velocity += (direction * (MOVE_SPEED * SPEED_BOOST))/7.0
-				else: #abs(velocity) <= abs(direction * (MOVE_SPEED * SPEED_BOOST) * 2) + Vector3(1,0,1):
-					velocity.x = lerp(velocity.x, direction.x * (MOVE_SPEED * SPEED_BOOST) * 2, delta * 2.25)
-					velocity.z = lerp(velocity.z, direction.z * (MOVE_SPEED * SPEED_BOOST) * 2, delta * 2.25)
-					#velocity += (direction * (MOVE_SPEED * SPEED_BOOST) * 2)/2.25
+				if Input.is_action_pressed("sprint") and STAMINA > 0: #and abs(velocity) <= abs(direction * (SPRINT_SPEED * (MOVE_SPEED * SPEED_BOOST))) + Vector3(1,0,1):
+					velocity.x = lerp(velocity.x, direction.x * (SPRINT_SPEED * (MOVE_SPEED * SPEED_BOOST)), delta * 3.5)
+					velocity.z = lerp(velocity.z, direction.z * (SPRINT_SPEED * (MOVE_SPEED * SPEED_BOOST)), delta * 3.5)
+					#velocity += (direction * (SPRINT_SPEED * (MOVE_SPEED * SPEED_BOOST)))/3.5
+					STAMINA = STAMINA - 0.5
+				else: #abs(velocity) <= abs(direction * (MOVE_SPEED * SPEED_BOOST)) + Vector3(1,0,1):
+					velocity.x = lerp(velocity.x, direction.x * (MOVE_SPEED * SPEED_BOOST), delta * 7.0)
+					velocity.z = lerp(velocity.z, direction.z * (MOVE_SPEED * SPEED_BOOST), delta * 7.0)
+					#velocity += (direction * (MOVE_SPEED * SPEED_BOOST))/7.0
+		
 				
 		else:
 			if is_on_floor():
@@ -297,29 +289,21 @@ func _physics_process(delta):
 				$slam_check.get_collider().break_o()
 	
 	#weapon handling
-	weapon_handler.handle_weapons(WEAPON)
-	if WEAPON > 3:
-		WEAPON = 1
-	if WEAPON < 1:
-		WEAPON = 3
-	if Input.is_action_just_pressed("weaponScrollUp"):
-		WEAPON = WEAPON - 1
-	if Input.is_action_just_pressed("weaponScrollDown"):
-		WEAPON = WEAPON + 1
-	if revAMMO == 0:
-		reload_revolver()
-	if shotAMMO == 0:
-		reload_revshotgun()
-	if WEAPON == 1:
-		if weapon_handler.get_visible_weapon() == revolver:
-			shoot_revolver()
-			revolver_special()
-		if weapon_handler.get_visible_weapon() == shotgun:
-			shoot_revshotgun()
-			revshotgun_alt()
-	elif WEAPON == 2:
-		pass
-	elif WEAPON == 3:
+	if Engine.time_scale != 0.0:
+		if Input.is_action_just_pressed("weaponScrollUp"):
+			WEAPON = WEAPON - 1
+		if Input.is_action_just_pressed("weaponScrollDown"):
+			WEAPON = WEAPON + 1
+		if WEAPON > 3:
+			WEAPON = 1
+		if WEAPON < 1:
+			WEAPON = 3
+		if Input.is_action_just_pressed("weaponScrollDown") or Input.is_action_just_pressed("weaponScrollUp"):
+			weapon_handler.handle_weapons(WEAPON)
+		if revAMMO == 0:
+			reload_revolver()
+		if shotAMMO == 0:
+			reload_revshotgun()
 		if weapon_handler.get_visible_weapon() == revolver:
 			shoot_revolver()
 			revolver_special()
@@ -454,35 +438,6 @@ func revolver_special():
 			reload_revolver()
 			RSp_charge = 0
 		%SpeedLabel.text = str(RSp_charge)
-#behold, the folly of man.
-func shoot_doublebarrel():
-	if Input.is_action_pressed("primaryFire"):
-		if !doublebarrelAnim.is_playing():
-			doublebarrelAnim.play("recoil and reload")
-			if db_firemode == 0:
-				var basis_x = cam.rotation_degrees.x
-				var vector_y = (-1 * (basis_x * (10.0 / 9.0))) / 100.0
-				var vector_z = abs((((abs(basis_x)) * (10.0 / 9.0)) / 100.0) - 1)
-				var gun_direction = neck.transform.basis * Vector3(0,vector_y,vector_z)
-				var newvelocity = lerp(velocity, gun_direction * 13, 1)
-				velocity += newvelocity
-				shotgun_spread(raycast_db_u, dbBarrel_u, raycastEnd_db_u, 0.25, false, false)
-				await get_tree().create_timer(0.007).timeout
-				shotgun_spread(raycast_db_l, dbBarrel_l, raycastEnd_db_l, 0.25, false, false)
-			else:
-				if cross_c.is_colliding() and cross_c.get_collider().is_in_group("enemies"):
-					hitstop_standard(0.15)
-					cross_c.get_collider().get_hit(1.0)
-				hitscan(raycast_db_u, dbBarrel_u, raycastEnd_db_u, 0.5, true, true, false)
-				hitscan(raycast_db_l, dbBarrel_l, raycastEnd_db_l, 0.5, true, true, false)
-func dbshotgun_switch():
-	if Input.is_action_pressed("secondaryFire"):
-		if !doublebarrelAnim.is_playing():
-			doublebarrelAnim.play("reload")
-			if db_firemode == 0:
-				db_firemode = 1
-			else:
-				db_firemode = 0
 				
 func shoot_revshotgun():
 	if Input.is_action_pressed("primaryFire"):
@@ -490,36 +445,31 @@ func shoot_revshotgun():
 			if !shottyAnim.is_playing():
 				shottyAnim.play("recoil")
 				shotAMMO = shotAMMO - 1
-				if shotAMMO != 2:
-					hitscan(raycast_r, rsBarrel, raycastEnd_r, 2.0 + abs(amount_rotated), true, true, true)
-				else:
-					shotgun_spread(raycast_r, rsBarrel, raycastEnd_r, 0.25, false, true)
+				shotgun_spread(raycast_r, rsBarrel, raycastEnd_r, 0.25, false, true)
 func reload_revshotgun():
 	if !shottyAnim.is_playing():
 		shottyAnim.play("reload")
-		if shotAMMO > 0 and damage_since_last_shotgun_reload > 0.0:
-			var basis_x = cam.rotation_degrees.x
-			var vector_y = (-1 * (basis_x * (10.0 / 9.0))) / 100.0
-			var vector_z = abs((((abs(basis_x)) * (10.0 / 9.0)) / 100.0) - 1)
-			var gun_direction = neck.transform.basis * Vector3(0,vector_y * -1,vector_z * -1)
-			velocity = gun_direction * damage_since_last_shotgun_reload * 7.5
-		shotAMMO = 3
+		shotAMMO = 6
 		damage_since_last_shotgun_reload = 0.0
-		
+var shotgun_charged: bool = false
 func revshotgun_alt():
 	if Input.is_action_pressed("secondaryFire"):
 		await get_tree().create_timer(1.0).timeout
 		if Input.is_action_pressed("secondaryFire"):
+			shotgun_charged = true
+		if Input.is_action_just_released("secondaryFire") and shotgun_charged:
 			if shotAMMO != 0:
 				if !shottyAnim.is_playing():
 					shottyAnim.play("recoil")
-					hitscan(raycast_r, rsBarrel, raycastEnd_r, ((damage_since_last_shotgun_reload + 1.0) / ammo_alternation()) + abs(amount_rotated), true, true, true)
 					var basis_x = cam.rotation_degrees.x
 					var vector_y = (-1 * (basis_x * (10.0 / 9.0))) / 100.0
 					var vector_z = abs((((abs(basis_x)) * (10.0 / 9.0)) / 100.0) - 1)
 					var gun_direction = neck.transform.basis * Vector3(0,vector_y,vector_z)
 					var newvelocity = lerp(velocity, gun_direction * (((damage_since_last_shotgun_reload + 1.0) / ammo_alternation()) * 6.0 + 1), 1)
 					velocity += newvelocity
+					hitscan(raycast_r, rsBarrel, raycastEnd_r, (((damage_since_last_shotgun_reload + 1.0) / ammo_alternation()) + abs(amount_rotated)) / 3.0, true, true, true)
+					hitscan(raycast_r, rsBarrel, raycastEnd_r, (((damage_since_last_shotgun_reload + 1.0) / ammo_alternation()) + abs(amount_rotated)) / 3.0, true, true, true)
+					hitscan(raycast_r, rsBarrel, raycastEnd_r, (((damage_since_last_shotgun_reload + 1.0) / ammo_alternation()) + abs(amount_rotated)) / 3.0, true, true, true)
 					shotAMMO = 0
 func ammo_alternation():
 	if revAMMO == 6:
@@ -564,6 +514,10 @@ func stylebonus_parry():
 	STYLE += 250
 	COMBO += 1
 	style_timeout()
+func stylebonus_gibbed():
+	STYLE += 200
+	COMBO += 1
+	style_timeout()
 
 func get_hit_p(damage):
 	HP -= damage
@@ -603,28 +557,28 @@ func initiate_slide(direction):
 		STAMINA -= 20.0
 
 func shotgun_spread(raycast, barrel, raycast_end, damage, draw_tracer, record_damage):
-	raycast.set_rotation_degrees(Vector3(3,0,0))
+	raycast.set_rotation_degrees(Vector3(5,0,0))
 	hitscan(raycast, barrel, raycast_end, damage, draw_tracer, false, record_damage)
 	await get_tree().create_timer(0.0001).timeout
-	raycast.set_rotation_degrees(Vector3(-3,0,0))
+	raycast.set_rotation_degrees(Vector3(-5,0,0))
 	hitscan(raycast, barrel, raycast_end, damage, draw_tracer, false, record_damage)
 	await get_tree().create_timer(0.0001).timeout
-	raycast.set_rotation_degrees(Vector3(0,3,0))
+	raycast.set_rotation_degrees(Vector3(0,5,0))
 	hitscan(raycast, barrel, raycast_end, damage, draw_tracer, false, record_damage)
 	await get_tree().create_timer(0.0001).timeout
-	raycast.set_rotation_degrees(Vector3(0,-3,0))
+	raycast.set_rotation_degrees(Vector3(0,-5,0))
 	hitscan(raycast, barrel, raycast_end, damage, draw_tracer, false, record_damage)
 	await get_tree().create_timer(0.0001).timeout
-	raycast.set_rotation_degrees(Vector3(2,2,0))
+	raycast.set_rotation_degrees(Vector3(3.5,3.5,0))
 	hitscan(raycast, barrel, raycast_end, damage, draw_tracer, false, record_damage)
 	await get_tree().create_timer(0.0001).timeout
-	raycast.set_rotation_degrees(Vector3(2,-2,0))
+	raycast.set_rotation_degrees(Vector3(3.5,-3.5,0))
 	hitscan(raycast, barrel, raycast_end, damage, draw_tracer, false, record_damage)
 	await get_tree().create_timer(0.0001).timeout
-	raycast.set_rotation_degrees(Vector3(-2,2,0))
+	raycast.set_rotation_degrees(Vector3(-3.5,3.5,0))
 	hitscan(raycast, barrel, raycast_end, damage, draw_tracer, false, record_damage)
 	await get_tree().create_timer(0.0001).timeout
-	raycast.set_rotation_degrees(Vector3(-2,-2,0))
+	raycast.set_rotation_degrees(Vector3(-3.5,-3.5,0))
 	hitscan(raycast, barrel, raycast_end, damage, draw_tracer, false, record_damage)
 	await get_tree().create_timer(0.0001).timeout
 	raycast.set_rotation_degrees(Vector3(0,0,0))
