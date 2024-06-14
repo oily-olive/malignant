@@ -28,7 +28,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/cyclops_level_builder/plugin.cfg", "res://addons/qodot/plugin.cfg")
+enabled=PackedStringArray("res://addons/SimpleDungeons/plugin.cfg", "res://addons/cyclops_level_builder/plugin.cfg")
 
 [input]
 
@@ -110,9 +110,6 @@ heal={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
-scaling_3d/mode=1
-scaling_3d/scale=0.25
-scaling_3d/fsr_sharpness=0.0
 textures/decals/filter=0
 textures/light_projectors/filter=0
 occlusion_culling/use_occlusion_culling=true
