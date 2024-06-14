@@ -1,12 +1,20 @@
-[gd_scene load_steps=103 format=3 uid="uid://cvxqpjsnrp7c0"]
+[gd_scene load_steps=113 format=3 uid="uid://cvxqpjsnrp7c0"]
 
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/nodes/cyclops_block.gd" id="1_5tpga"]
+[ext_resource type="Script" path="res://scripts/tutorial_level.gd" id="1_100l2"]
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/resources/convex_block_data.gd" id="2_nb1fc"]
 [ext_resource type="PackedScene" uid="uid://ccu4uniukr2ly" path="res://scenes/utilities/breakable_floor.tscn" id="3_3dmdt"]
 [ext_resource type="PackedScene" uid="uid://ddg1hwbx1w5xl" path="res://scenes/character.tscn" id="3_ec2cu"]
 [ext_resource type="PackedScene" uid="uid://fl53pc5tevjw" path="res://scenes/utilities/text_display_area.tscn" id="5_646y2"]
 [ext_resource type="Environment" uid="uid://ct1wbiin0lxlg" path="res://environments/testworld.tres" id="6_biunj"]
 [ext_resource type="PackedScene" uid="uid://1uyqjcc04knm" path="res://scenes/revolver_pickup.tscn" id="7_r06cm"]
+[ext_resource type="PackedScene" uid="uid://coygjw43iv5f3" path="res://scenes/utilities/spawner.tscn" id="9_0dy5c"]
+[ext_resource type="PackedScene" uid="uid://kigi77jdldbv" path="res://scenes/placeholder_enemy.tscn" id="10_k66q3"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_1nsjv"]
+vertices = PackedVector3Array(-34.5, 9.5, -8.5, -34.5, 9.5, 0.5, 8.5, 9.5, 0.5, 8.5, 9.5, -8.5, -34.5, -1.5, -0.5, -34.5, -1.5, -6.25, -35.5, -1.5, -6.5, -50.5, -1.5, -7.5, -50.5, -1.5, -0.5, -35.5, -1.5, -6.5, -35.5, -1.5, -7.5, -50.5, -1.5, -7.5, -29, 1.5, -0.5, -29.25, 1.5, -1.5, -32.5, 1.5, -1.75, -33.25, 1.5, -0.5, -32.5, 1.5, -1.75, -32.5, 1.5, -6.25, -33.25, 1.5, -7.25, -33.25, 1.5, -0.5, -32.5, 1.5, -6.25, -28.75, 1.5, -6.5, -28.75, 1.5, -7.25, -33.25, 1.5, -7.25, -28.75, 1.5, -7.25, -28.75, 1.5, -6.5, -27.5, 1.5, -6.25, -19.5, 1.5, -7.25, -27.5, 1.5, -1.75, -29.25, 1.5, -1.5, -29, 1.5, -0.5, -19.5, 1.5, -0.5, -27.5, 1.5, -1.75, -19.5, 1.5, -0.5, -19.5, 1.5, -7.25, -27.5, 1.5, -6.25, -7.5, 2.25, -6.25, -8.5, 2, -6.25, -8.5, 2.5, -0.5, -8.5, 2.5, -4.8125, 7.5, 1.5, -7.25, -7.5, 2.25, -7.25, -7.5, 2.25, -6.25, -6.13636, 1.5, -6.34091, -6.13636, 1.5, -7.25, 7.5, 1.5, -0.5, 7.5, 1.5, -7.25, -7.5, 2.25, -6.25, -8.5, 2.5, -0.5, -5.59091, 1.5, -0.5, -6.13636, 1.5, -6.34091, -50.5, -8.5, -6.25, -50.5, -8.5, -1.5, -39.5, -8.5, -1.5, -39.5, -8.5, -6.25, -31.5, -12.5, -3.5, -31.25, -12.5, -2.5, -28.5, -12.5, -2.5, -28.5, -12.5, -5.25, -31.25, -12.5, -5.25, -31.75, -12.5, -4.25, -31.5, -12.5, -3.5, -28.5, -12.5, -2.5, -33.5, -12.5, -1.5, -33.25, -12.5, -3.5, -33.25, -12.5, -4.25, -33.5, -12.5, -6.25, -38.25, -12.5, -6.25, -38.25, -12.5, -1.5, -31.75, -12.5, -4.25, -33.25, -12.5, -4.25, -33.25, -12.5, -3.5, -31.5, -12.5, -3.5, -18.25, -6.5, -1.75, -19.25, -6, -1.5, -19.25, -6.5, -0.5, -9.5, -6.5, -0.5, -9.5, -6.5, -6.25, -18.25, -6.5, -6.25, -18.25, -6.5, -1.75, -9.5, -6.5, -0.5, 0.5, 8.5, 1.75, 0.5, 8.5, 7.5, 7.5, 8.5, 7.5, 7.5, 8.5, 1.75, 1.75, 1.5, 1.75, 1.75, 1.5, 6.5, 6.5, 1.5, 6.5, 6.5, 1.5, 1.75)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1), PackedInt32Array(5, 4, 6), PackedInt32Array(6, 4, 8), PackedInt32Array(6, 8, 7), PackedInt32Array(11, 10, 9), PackedInt32Array(13, 12, 14), PackedInt32Array(14, 12, 15), PackedInt32Array(17, 16, 18), PackedInt32Array(18, 16, 19), PackedInt32Array(21, 20, 22), PackedInt32Array(22, 20, 23), PackedInt32Array(25, 24, 26), PackedInt32Array(26, 24, 27), PackedInt32Array(29, 28, 30), PackedInt32Array(30, 28, 31), PackedInt32Array(35, 34, 32), PackedInt32Array(32, 34, 33), PackedInt32Array(37, 36, 39), PackedInt32Array(39, 36, 38), PackedInt32Array(42, 41, 43), PackedInt32Array(43, 41, 44), PackedInt32Array(43, 44, 40), PackedInt32Array(47, 50, 48), PackedInt32Array(48, 50, 49), PackedInt32Array(49, 50, 45), PackedInt32Array(45, 50, 46), PackedInt32Array(54, 53, 51), PackedInt32Array(51, 53, 52), PackedInt32Array(57, 56, 55), PackedInt32Array(60, 59, 61), PackedInt32Array(61, 59, 58), PackedInt32Array(61, 58, 62), PackedInt32Array(64, 63, 65), PackedInt32Array(65, 63, 66), PackedInt32Array(66, 63, 68), PackedInt32Array(66, 68, 67), PackedInt32Array(70, 69, 71), PackedInt32Array(71, 69, 72), PackedInt32Array(74, 73, 75), PackedInt32Array(75, 73, 76), PackedInt32Array(78, 77, 79), PackedInt32Array(79, 77, 80), PackedInt32Array(84, 83, 81), PackedInt32Array(81, 83, 82), PackedInt32Array(88, 87, 85), PackedInt32Array(85, 87, 86)]
+agent_height = 2.0
 
 [sub_resource type="Resource" id="Resource_40obx"]
 script = ExtResource("2_nb1fc")
@@ -2444,34 +2452,6 @@ active_edge = -1
 active_face = -1
 active_face_vertex = 0
 
-[sub_resource type="Resource" id="Resource_ikd6s"]
-script = ExtResource("2_nb1fc")
-selected = false
-active = false
-collsion = true
-physics_layer = 0
-physics_mask = 0
-vertex_points = PackedVector3Array(0, 12, 0, 0, 12, 8, 0, 0, 8, 0, 0, 0, 1, 12, 0, 1, 12, 8, 1, 0, 8, 1, 0, 0)
-vertex_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0)
-edge_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-face_material_indices = PackedInt32Array(-1, -1, -1, -1, -1, -1)
-face_uv_transform = Array[Transform2D]([Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0)])
-face_visible = PackedByteArray(1, 1, 1, 1, 1, 1)
-face_color = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
-face_selected = PackedByteArray(0, 0, 0, 0, 0, 0)
-face_vertex_face_index = PackedInt32Array(0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5)
-face_vertex_vertex_index = PackedInt32Array(0, 1, 2, 3, 7, 6, 5, 4, 1, 0, 4, 5, 2, 1, 5, 6, 3, 2, 6, 7, 0, 3, 7, 4)
-face_vertex_normal = PackedVector3Array(-1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1)
-face_vertex_color = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
-edge_vertex_indices = PackedInt32Array(0, 1, 1, 2, 2, 3, 3, 0, 7, 6, 6, 5, 5, 4, 4, 7, 0, 4, 5, 1, 6, 2, 7, 3)
-edge_face_indices = PackedInt32Array(0, 2, 0, 3, 0, 4, 0, 5, 1, 4, 1, 3, 1, 2, 1, 5, 2, 5, 2, 3, 3, 4, 4, 5)
-face_vertex_count = PackedInt32Array(4, 4, 4, 4, 4, 4)
-face_vertex_indices = PackedInt32Array(0, 1, 2, 3, 7, 6, 5, 4, 1, 0, 4, 5, 2, 1, 5, 6, 3, 2, 6, 7, 0, 3, 7, 4)
-active_vertex = -1
-active_edge = -1
-active_face = -1
-active_face_vertex = 0
-
 [sub_resource type="Resource" id="Resource_ahryq"]
 script = ExtResource("2_nb1fc")
 selected = false
@@ -2556,6 +2536,146 @@ active_edge = -1
 active_face = -1
 active_face_vertex = 0
 
+[sub_resource type="Resource" id="Resource_c6mqj"]
+script = ExtResource("2_nb1fc")
+selected = false
+active = false
+collsion = true
+physics_layer = 0
+physics_mask = 0
+vertex_points = PackedVector3Array(0, 1, 0, 0, 1, 8, 0, 0, 8, 0, 0, 0, 7, 1, 0, 7, 1, 8, 7, 0, 8, 7, 0, 0)
+vertex_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0)
+edge_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+face_material_indices = PackedInt32Array(-1, -1, -1, -1, -1, -1)
+face_uv_transform = Array[Transform2D]([Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0)])
+face_visible = PackedByteArray(1, 1, 1, 1, 1, 1)
+face_color = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+face_selected = PackedByteArray(0, 0, 0, 0, 0, 0)
+face_vertex_face_index = PackedInt32Array(0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5)
+face_vertex_vertex_index = PackedInt32Array(0, 1, 2, 3, 7, 6, 5, 4, 1, 0, 4, 5, 2, 1, 5, 6, 3, 2, 6, 7, 0, 3, 7, 4)
+face_vertex_normal = PackedVector3Array(-1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1)
+face_vertex_color = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+edge_vertex_indices = PackedInt32Array(0, 1, 1, 2, 2, 3, 3, 0, 7, 6, 6, 5, 5, 4, 4, 7, 0, 4, 5, 1, 6, 2, 7, 3)
+edge_face_indices = PackedInt32Array(0, 2, 0, 3, 0, 4, 0, 5, 1, 4, 1, 3, 1, 2, 1, 5, 2, 5, 2, 3, 3, 4, 4, 5)
+face_vertex_count = PackedInt32Array(4, 4, 4, 4, 4, 4)
+face_vertex_indices = PackedInt32Array(0, 1, 2, 3, 7, 6, 5, 4, 1, 0, 4, 5, 2, 1, 5, 6, 3, 2, 6, 7, 0, 3, 7, 4)
+active_vertex = -1
+active_edge = -1
+active_face = -1
+active_face_vertex = 0
+
+[sub_resource type="Resource" id="Resource_ou7qn"]
+script = ExtResource("2_nb1fc")
+selected = false
+active = false
+collsion = true
+physics_layer = 0
+physics_mask = 0
+vertex_points = PackedVector3Array(0, 1, 0, 0, 1, 8, 0, 0, 8, 0, 0, 0, 7, 1, 0, 7, 1, 8, 7, 0, 8, 7, 0, 0)
+vertex_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0)
+edge_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+face_material_indices = PackedInt32Array(-1, -1, -1, -1, -1, -1)
+face_uv_transform = Array[Transform2D]([Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0)])
+face_visible = PackedByteArray(1, 1, 1, 1, 1, 1)
+face_color = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+face_selected = PackedByteArray(0, 0, 0, 0, 0, 0)
+face_vertex_face_index = PackedInt32Array(0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5)
+face_vertex_vertex_index = PackedInt32Array(0, 1, 2, 3, 7, 6, 5, 4, 1, 0, 4, 5, 2, 1, 5, 6, 3, 2, 6, 7, 0, 3, 7, 4)
+face_vertex_normal = PackedVector3Array(-1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1)
+face_vertex_color = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+edge_vertex_indices = PackedInt32Array(0, 1, 1, 2, 2, 3, 3, 0, 7, 6, 6, 5, 5, 4, 4, 7, 0, 4, 5, 1, 6, 2, 7, 3)
+edge_face_indices = PackedInt32Array(0, 2, 0, 3, 0, 4, 0, 5, 1, 4, 1, 3, 1, 2, 1, 5, 2, 5, 2, 3, 3, 4, 4, 5)
+face_vertex_count = PackedInt32Array(4, 4, 4, 4, 4, 4)
+face_vertex_indices = PackedInt32Array(0, 1, 2, 3, 7, 6, 5, 4, 1, 0, 4, 5, 2, 1, 5, 6, 3, 2, 6, 7, 0, 3, 7, 4)
+active_vertex = -1
+active_edge = -1
+active_face = -1
+active_face_vertex = 0
+
+[sub_resource type="Resource" id="Resource_yipas"]
+script = ExtResource("2_nb1fc")
+selected = false
+active = false
+collsion = true
+physics_layer = 0
+physics_mask = 0
+vertex_points = PackedVector3Array(0, 6, 0, 0, 6, 1, 0, 0, 1, 0, 0, 0, 7, 6, 0, 7, 6, 1, 7, 0, 1, 7, 0, 0)
+vertex_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0)
+edge_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+face_material_indices = PackedInt32Array(-1, -1, -1, -1, -1, -1)
+face_uv_transform = Array[Transform2D]([Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0)])
+face_visible = PackedByteArray(1, 1, 1, 1, 1, 1)
+face_color = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+face_selected = PackedByteArray(0, 0, 0, 0, 0, 0)
+face_vertex_face_index = PackedInt32Array(0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5)
+face_vertex_vertex_index = PackedInt32Array(0, 1, 2, 3, 7, 6, 5, 4, 1, 0, 4, 5, 2, 1, 5, 6, 3, 2, 6, 7, 0, 3, 7, 4)
+face_vertex_normal = PackedVector3Array(-1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1)
+face_vertex_color = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+edge_vertex_indices = PackedInt32Array(0, 1, 1, 2, 2, 3, 3, 0, 7, 6, 6, 5, 5, 4, 4, 7, 0, 4, 5, 1, 6, 2, 7, 3)
+edge_face_indices = PackedInt32Array(0, 2, 0, 3, 0, 4, 0, 5, 1, 4, 1, 3, 1, 2, 1, 5, 2, 5, 2, 3, 3, 4, 4, 5)
+face_vertex_count = PackedInt32Array(4, 4, 4, 4, 4, 4)
+face_vertex_indices = PackedInt32Array(0, 1, 2, 3, 7, 6, 5, 4, 1, 0, 4, 5, 2, 1, 5, 6, 3, 2, 6, 7, 0, 3, 7, 4)
+active_vertex = -1
+active_edge = -1
+active_face = -1
+active_face_vertex = 0
+
+[sub_resource type="Resource" id="Resource_wchm6"]
+script = ExtResource("2_nb1fc")
+selected = false
+active = false
+collsion = true
+physics_layer = 0
+physics_mask = 0
+vertex_points = PackedVector3Array(0, 6, 0, 0, 6, 1, 0, 0, 1, 0, 0, 0, 7, 6, 0, 7, 6, 1, 7, 0, 1, 7, 0, 0)
+vertex_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0)
+edge_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+face_material_indices = PackedInt32Array(-1, -1, -1, -1, -1, -1)
+face_uv_transform = Array[Transform2D]([Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0)])
+face_visible = PackedByteArray(1, 1, 1, 1, 1, 1)
+face_color = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+face_selected = PackedByteArray(0, 0, 0, 0, 0, 0)
+face_vertex_face_index = PackedInt32Array(0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5)
+face_vertex_vertex_index = PackedInt32Array(0, 1, 2, 3, 7, 6, 5, 4, 1, 0, 4, 5, 2, 1, 5, 6, 3, 2, 6, 7, 0, 3, 7, 4)
+face_vertex_normal = PackedVector3Array(-1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1)
+face_vertex_color = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+edge_vertex_indices = PackedInt32Array(0, 1, 1, 2, 2, 3, 3, 0, 7, 6, 6, 5, 5, 4, 4, 7, 0, 4, 5, 1, 6, 2, 7, 3)
+edge_face_indices = PackedInt32Array(0, 2, 0, 3, 0, 4, 0, 5, 1, 4, 1, 3, 1, 2, 1, 5, 2, 5, 2, 3, 3, 4, 4, 5)
+face_vertex_count = PackedInt32Array(4, 4, 4, 4, 4, 4)
+face_vertex_indices = PackedInt32Array(0, 1, 2, 3, 7, 6, 5, 4, 1, 0, 4, 5, 2, 1, 5, 6, 3, 2, 6, 7, 0, 3, 7, 4)
+active_vertex = -1
+active_edge = -1
+active_face = -1
+active_face_vertex = 0
+
+[sub_resource type="Resource" id="Resource_5tihj"]
+script = ExtResource("2_nb1fc")
+selected = false
+active = false
+collsion = true
+physics_layer = 0
+physics_mask = 0
+vertex_points = PackedVector3Array(0, 6, 0, 0, 6, 6, 0, 0, 6, 0, 0, 0, 1, 6, 0, 1, 6, 6, 1, 0, 6, 1, 0, 0)
+vertex_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0)
+edge_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+face_material_indices = PackedInt32Array(-1, -1, -1, -1, -1, -1)
+face_uv_transform = Array[Transform2D]([Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 0, 0)])
+face_visible = PackedByteArray(1, 1, 1, 1, 1, 1)
+face_color = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+face_selected = PackedByteArray(0, 0, 0, 0, 0, 0)
+face_vertex_face_index = PackedInt32Array(0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5)
+face_vertex_vertex_index = PackedInt32Array(0, 1, 2, 3, 7, 6, 5, 4, 1, 0, 4, 5, 2, 1, 5, 6, 3, 2, 6, 7, 0, 3, 7, 4)
+face_vertex_normal = PackedVector3Array(-1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1)
+face_vertex_color = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+edge_vertex_indices = PackedInt32Array(0, 1, 1, 2, 2, 3, 3, 0, 7, 6, 6, 5, 5, 4, 4, 7, 0, 4, 5, 1, 6, 2, 7, 3)
+edge_face_indices = PackedInt32Array(0, 2, 0, 3, 0, 4, 0, 5, 1, 4, 1, 3, 1, 2, 1, 5, 2, 5, 2, 3, 3, 4, 4, 5)
+face_vertex_count = PackedInt32Array(4, 4, 4, 4, 4, 4)
+face_vertex_indices = PackedInt32Array(0, 1, 2, 3, 7, 6, 5, 4, 1, 0, 4, 5, 2, 1, 5, 6, 3, 2, 6, 7, 0, 3, 7, 4)
+active_vertex = -1
+active_edge = -1
+active_face = -1
+active_face_vertex = 0
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_iteva"]
 size = Vector3(2, 1, 1)
 
@@ -2568,466 +2688,497 @@ size = Vector3(8, 7, 8)
 [sub_resource type="BoxShape3D" id="BoxShape3D_0h82m"]
 size = Vector3(4, 6, 6)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_0216b"]
+size = Vector3(1000, 1, 1000)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yo0i1"]
+
 [node name="tutorial level" type="Node3D"]
+script = ExtResource("1_100l2")
 
-[node name="geometry" type="Node3D" parent="."]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_1nsjv")
 
-[node name="block0" type="Node3D" parent="geometry"]
+[node name="geometry" type="Node3D" parent="NavigationRegion3D"]
+
+[node name="block0" type="Node3D" parent="NavigationRegion3D/geometry"]
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_40obx")
 
-[node name="Block_0" type="Node3D" parent="geometry"]
+[node name="Block_0" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 1, 7)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_ig3ck")
 
-[node name="Block_1" type="Node3D" parent="geometry"]
+[node name="Block_1" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_wg6hp")
 
-[node name="Block_2" type="Node3D" parent="geometry"]
+[node name="Block_2" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_ws1xk")
 
-[node name="Block_3" type="Node3D" parent="geometry"]
+[node name="Block_3" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 1, 0)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_1ajed")
 
-[node name="Block_4" type="Node3D" parent="geometry"]
+[node name="Block_4" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 7)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_6y6vi")
 
-[node name="Block_5" type="Node3D" parent="geometry"]
+[node name="Block_5" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 0)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_d6x0p")
 
-[node name="Block_6" type="Node3D" parent="geometry"]
+[node name="Block_6" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_uhun6")
 
-[node name="Block_7" type="Node3D" parent="geometry"]
+[node name="Block_7" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2, 0)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_rfhpp")
 
-[node name="Block_8" type="Node3D" parent="geometry"]
+[node name="Block_8" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 1, 1)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_7shj4")
 
-[node name="Block_9" type="Node3D" parent="geometry"]
+[node name="Block_9" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 7)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_aw4cl")
 
-[node name="Block_10" type="Node3D" parent="geometry"]
+[node name="Block_10" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_w2e5u")
 
-[node name="Block_11" type="Node3D" parent="geometry"]
+[node name="Block_11" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_dypp1")
 
-[node name="Block_12" type="Node3D" parent="geometry"]
+[node name="Block_12" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_uoivg")
 
-[node name="Block_14" type="Node3D" parent="geometry"]
+[node name="Block_14" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 0, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_eoxgh")
 
-[node name="Block_13" type="Node3D" parent="geometry"]
+[node name="Block_13" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -9)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_ed0x1")
 
-[node name="Block_15" type="Node3D" parent="geometry"]
+[node name="Block_15" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_3ry76")
 
-[node name="Block_16" type="Node3D" parent="geometry"]
+[node name="Block_16" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_xx387")
 
-[node name="Block_18" type="Node3D" parent="geometry"]
+[node name="Block_18" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -8, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_p80w5")
 
-[node name="Block_19" type="Node3D" parent="geometry"]
+[node name="Block_19" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, -8, -9)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_c0c64")
 
-[node name="Block_20" type="Node3D" parent="geometry"]
+[node name="Block_20" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, -8, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_kdoxt")
 
-[node name="Block_21" type="Node3D" parent="geometry"]
+[node name="Block_21" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, -7, -9)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_xgqch")
 
-[node name="Block_22" type="Node3D" parent="geometry"]
+[node name="Block_22" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -7, 0)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_oofrv")
 
-[node name="Block_23" type="Node3D" parent="geometry"]
+[node name="Block_23" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -7, -7)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_f7hd2")
 
-[node name="Block_24" type="Node3D" parent="geometry"]
+[node name="Block_24" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -7, -6.5)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_6ay4s")
 
-[node name="Block_25" type="Node3D" parent="geometry"]
+[node name="Block_25" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -7, -6)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_cc3u3")
 
-[node name="Block_26" type="Node3D" parent="geometry"]
+[node name="Block_26" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -7, -5.5)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_lwvfd")
 
-[node name="Block_27" type="Node3D" parent="geometry"]
+[node name="Block_27" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -7, -5)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_511qc")
 
-[node name="Block_28" type="Node3D" parent="geometry"]
+[node name="Block_28" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -7, -4.5)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_bp2sw")
 
-[node name="Block_29" type="Node3D" parent="geometry"]
+[node name="Block_29" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -7, -4)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_lxkr2")
 
-[node name="Block_30" type="Node3D" parent="geometry"]
+[node name="Block_30" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -7, -3.5)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_k10tl")
 
-[node name="Block_31" type="Node3D" parent="geometry"]
+[node name="Block_31" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -7, -3)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_wgvkc")
 
-[node name="Block_32" type="Node3D" parent="geometry"]
+[node name="Block_32" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -7, -2.5)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_bqdbm")
 
-[node name="Block_33" type="Node3D" parent="geometry"]
+[node name="Block_33" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -7, -2)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_hfst4")
 
-[node name="Block_34" type="Node3D" parent="geometry"]
+[node name="Block_34" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -7, -1.5)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_sfmck")
 
-[node name="Block_35" type="Node3D" parent="geometry"]
+[node name="Block_35" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -7, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_js3jy")
 
-[node name="Block_36" type="Node3D" parent="geometry"]
+[node name="Block_36" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, -7, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_6ldhf")
 
-[node name="Block_37" type="Node3D" parent="geometry"]
+[node name="Block_37" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5, -7, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_d52eb")
 
-[node name="Block_38" type="Node3D" parent="geometry"]
+[node name="Block_38" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, -7, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_6kfvg")
 
-[node name="Block_39" type="Node3D" parent="geometry"]
+[node name="Block_39" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, -7, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_abyre")
 
-[node name="Block_40" type="Node3D" parent="geometry"]
+[node name="Block_40" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, -7, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_glcjk")
 
-[node name="Block_41" type="Node3D" parent="geometry"]
+[node name="Block_41" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.5, -7, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_d2dbn")
 
-[node name="Block_42" type="Node3D" parent="geometry"]
+[node name="Block_42" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, -7, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_buuuy")
 
-[node name="Block_43" type="Node3D" parent="geometry"]
+[node name="Block_43" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, -7, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_nhhf4")
 
-[node name="Block_44" type="Node3D" parent="geometry"]
+[node name="Block_44" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, -7, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_f61xm")
 
-[node name="Block_45" type="Node3D" parent="geometry"]
+[node name="Block_45" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.5, -7, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_14sqw")
 
-[node name="Block_46" type="Node3D" parent="geometry"]
+[node name="Block_46" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, -7, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_a13qn")
 
-[node name="Block_47" type="Node3D" parent="geometry"]
+[node name="Block_47" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.5, -7, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_5n6p2")
 
-[node name="Block_48" type="Node3D" parent="geometry"]
+[node name="Block_48" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, -7, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_01yog")
 
-[node name="Block_49" type="Node3D" parent="geometry"]
+[node name="Block_49" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5, -7, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_lfsl3")
 
-[node name="Block_50" type="Node3D" parent="geometry"]
+[node name="Block_50" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, -7, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_ko7hp")
 
-[node name="Block_51" type="Node3D" parent="geometry"]
+[node name="Block_51" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.5, -7, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_tic0s")
 
-[node name="Block_52" type="Node3D" parent="geometry"]
+[node name="Block_52" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, -7, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_p6as5")
 
-[node name="Block_53" type="Node3D" parent="geometry"]
+[node name="Block_53" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5, -7, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_mcswa")
 
-[node name="Block_54" type="Node3D" parent="geometry"]
+[node name="Block_54" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, -7, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_5mbve")
 
-[node name="Block_55" type="Node3D" parent="geometry"]
+[node name="Block_55" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.5, -7, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_1e22c")
 
-[node name="Block_56" type="Node3D" parent="geometry"]
+[node name="Block_56" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, -7, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_suy8f")
 
-[node name="Block_57" type="Node3D" parent="geometry"]
+[node name="Block_57" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, -7, -5)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_tp88b")
 
-[node name="Block_58" type="Node3D" parent="geometry"]
+[node name="Block_58" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, -7, -5.5)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_6kaay")
 
-[node name="Block_59" type="Node3D" parent="geometry"]
+[node name="Block_59" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, -7, -6)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_lt8ev")
 
-[node name="Block_60" type="Node3D" parent="geometry"]
+[node name="Block_60" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, -7, -6.5)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_icgi0")
 
-[node name="Block_61" type="Node3D" parent="geometry"]
+[node name="Block_61" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, -7, -5)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_qgfeu")
 
-[node name="Block_62" type="Node3D" parent="geometry"]
+[node name="Block_62" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 1, 0)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_kennp")
 
-[node name="Block_63" type="Node3D" parent="geometry"]
+[node name="Block_63" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0.5, 0)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_ycqra")
 
-[node name="Block_64" type="Node3D" parent="geometry"]
+[node name="Block_64" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 0, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_gew8b")
 
-[node name="Block_65" type="Node3D" parent="geometry"]
+[node name="Block_65" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 0, -2)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_0ewub")
 
-[node name="Block_66" type="Node3D" parent="geometry"]
+[node name="Block_66" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 0, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_va0fg")
 
-[node name="Block_67" type="Node3D" parent="geometry"]
+[node name="Block_67" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 1, -9)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_mocvd")
 
-[node name="Block_68" type="Node3D" parent="geometry"]
+[node name="Block_68" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 1, 0)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_krry8")
 
-[node name="bob" type="Node3D" parent="geometry"]
+[node name="bob" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_mukib")
 
-[node name="Block_70" type="Node3D" parent="geometry"]
+[node name="Block_70" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 1, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_u0d0d")
 
-[node name="Block_69" type="Node3D" parent="geometry"]
+[node name="Block_69" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, -6, -7)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_4qncu")
 
-[node name="Block_71" type="Node3D" parent="geometry"]
+[node name="Block_71" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, -6, -7)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_d86c7")
 
-[node name="Block_72" type="Node3D" parent="geometry"]
+[node name="Block_72" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, -6, -7)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_50dmq")
 
-[node name="Block_73" type="Node3D" parent="geometry"]
+[node name="Block_73" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, -6, -2)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_e6nkt")
 
-[node name="breakable_floor" parent="geometry" instance=ExtResource("3_3dmdt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, -2, -4)
-
-[node name="Block_74" type="Node3D" parent="geometry"]
+[node name="Block_74" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, -14, -7)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_6x0jt")
 
-[node name="Block_75" type="Node3D" parent="geometry"]
+[node name="Block_75" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, -14, -7)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_gsdc0")
 
-[node name="Block_76" type="Node3D" parent="geometry"]
+[node name="Block_76" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, -13, -7)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_nokgc")
 
-[node name="Block_78" type="Node3D" parent="geometry"]
+[node name="Block_78" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, -13, -2)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_h38jk")
 
-[node name="Block_80" type="Node3D" parent="geometry"]
+[node name="Block_80" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, -8, -3)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_8xu12")
 
-[node name="Block_81" type="Node3D" parent="geometry"]
+[node name="Block_81" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, -11, -2)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_g30wq")
 
-[node name="Block_82" type="Node3D" parent="geometry"]
+[node name="Block_82" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, -11, -5)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_wegnr")
 
-[node name="Block_77" type="Node3D" parent="geometry"]
+[node name="Block_77" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39, -14, -7)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_qo0wf")
 
-[node name="Block_79" type="Node3D" parent="geometry"]
+[node name="Block_79" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44, -14, -7)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_r8uow")
 
-[node name="Block_83" type="Node3D" parent="geometry"]
+[node name="Block_83" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44, -14, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_3w4jq")
 
-[node name="Block_84" type="Node3D" parent="geometry"]
+[node name="Block_84" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44, -14, -1)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_bfslg")
 
-[node name="Block_85" type="Node3D" parent="geometry"]
+[node name="Block_85" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44, -3, -8)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_3aeuv")
 
-[node name="Block_86" type="Node3D" parent="geometry"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, -14, -8)
-script = ExtResource("1_5tpga")
-block_data = SubResource("Resource_ikd6s")
-
-[node name="Block_87" type="Node3D" parent="geometry"]
+[node name="Block_87" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 7, -9)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_ahryq")
 
-[node name="Block_17" type="Node3D" parent="geometry"]
+[node name="Block_17" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 7, 0)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_sklbc")
 
-[node name="Block_88" type="Node3D" parent="geometry"]
+[node name="Block_88" type="Node3D" parent="NavigationRegion3D/geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 8, -9)
 script = ExtResource("1_5tpga")
 block_data = SubResource("Resource_4wkgj")
+
+[node name="Block_86" type="Node3D" parent="NavigationRegion3D/geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51, -10, -8)
+script = ExtResource("1_5tpga")
+block_data = SubResource("Resource_c6mqj")
+
+[node name="Block_89" type="Node3D" parent="NavigationRegion3D/geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51, -3, -8)
+script = ExtResource("1_5tpga")
+block_data = SubResource("Resource_ou7qn")
+
+[node name="Block_90" type="Node3D" parent="NavigationRegion3D/geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51, -9, -8)
+script = ExtResource("1_5tpga")
+block_data = SubResource("Resource_yipas")
+
+[node name="Block_91" type="Node3D" parent="NavigationRegion3D/geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51, -9, -1)
+script = ExtResource("1_5tpga")
+block_data = SubResource("Resource_wchm6")
+
+[node name="non_navigable_geometry" type="Node3D" parent="."]
+
+[node name="moving_door_1" type="Node3D" parent="non_navigable_geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, -9, -7)
+script = ExtResource("1_5tpga")
+block_data = SubResource("Resource_5tihj")
+
+[node name="breakable_floor" parent="non_navigable_geometry" instance=ExtResource("3_3dmdt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, -2, -4)
 
 [node name="Character" parent="." instance=ExtResource("3_ec2cu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 6)
@@ -3065,3 +3216,23 @@ environment = ExtResource("6_biunj")
 
 [node name="revolver_pickup" parent="." instance=ExtResource("7_r06cm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, -9, -4)
+
+[node name="enemy_spawner_01" parent="." instance=ExtResource("9_0dy5c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, -8, -4)
+thing_to_spawn = ExtResource("10_k66q3")
+add_to_scene = true
+
+[node name="out_of_bounds" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -46.5561, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="out_of_bounds"]
+shape = SubResource("BoxShape3D_0216b")
+
+[node name="revolver_pick_up_detect" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, -8.5, -4)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="revolver_pick_up_detect"]
+shape = SubResource("BoxShape3D_yo0i1")
+
+[connection signal="body_entered" from="out_of_bounds" to="." method="_on_out_of_bounds_body_entered"]
+[connection signal="body_entered" from="revolver_pick_up_detect" to="." method="_on_revolver_pick_up_detect_body_entered"]
