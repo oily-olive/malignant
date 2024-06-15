@@ -2,7 +2,7 @@ extends CharacterBody3D
 class_name Enemy
 
 @export var nav_agent: NavigationAgent3D
-var world: Node3D
+var world: GameWorld
 var player: Player
 @export var max_health: float = 1.5
 var health
@@ -30,7 +30,7 @@ func find_scene_root(obj):
 		#queue_free()
 	if world == null:
 		for thing in get_tree().get_root().get_children():
-			if thing is Node3D:
+			if thing is GameWorld:
 				world = thing
 				emit_signal("world_found")
 
@@ -61,6 +61,7 @@ func _ready():
 	find_scene_root(self)
 	await get_tree().create_timer(0.1).timeout
 	find_player()
+	world.number_of_living_enemies += 1
 
 func _process(delta):
 	update_nav_target()
@@ -79,6 +80,7 @@ func die():
 		if obj is CollisionShape3D:
 			obj.disabled = true
 	emit_signal("enemy_died")
+	world.number_of_living_enemies -= 1
 	await get_tree().create_timer(0.5).timeout
 	queue_free()
 func gib():

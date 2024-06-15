@@ -4,7 +4,11 @@ extends Node3D
 @onready var block_1 = $block1 as CyclopsBlock
 @onready var area = $"../Area3D" as PlayerDetectionArea
 var door_closed: bool = false
+var world: GameWorld
 
+func _ready():
+	world = get_parent().get_parent().get_parent().get_parent()
+	
 func close_door():
 	door_closed = true
 
@@ -28,7 +32,7 @@ func _process(delta):
 			return
 	
 	if door_closed:
-		await get_tree().create_timer(5).timeout
+		await world.all_enemies_dead
 		open_door()
 		return
 	

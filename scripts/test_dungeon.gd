@@ -1,20 +1,32 @@
 extends Node3D
+class_name GameWorld
 
 @onready var dungeon_generator = $DungeonGenerator3D as DungeonGenerator3D
-var player
-var finished : bool
-var stop_adding_walls : bool
+var player: Player
+var finished: bool
+var stop_adding_walls: bool
+var number_of_living_enemies: int = 0
+var enemy_control: bool = false
+signal all_enemies_dead
 
-func _physics_process(delta):
+func _process(delta):
 	#if $music.playing == false: 
 		#$music.play()
-	pass
 	
 	if player == null:
 		for node in get_children():
 			if node.is_in_group("player"):
 				player = node
-
+	
+	if number_of_living_enemies < 0:
+		number_of_living_enemies = 0
+	
+	if number_of_living_enemies > 0  and !enemy_control:
+		enemy_control = true
+	
+	if number_of_living_enemies == 0 and enemy_control:
+		enemy_control = false
+		emit_signal("all_enemies_dead")
 #
 #func splat():
 	#player.stylebonus_splat()
