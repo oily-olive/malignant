@@ -22,6 +22,8 @@ size = Vector3(2, 2, 2)
 size = Vector3(0.5, 0.5, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1812g"]
+radius = 0.49
+height = 1.9
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_6i6o0"]
 radius = 0.49
@@ -295,6 +297,7 @@ layout_mode = 2
 label_settings = ExtResource("6_6cijo")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
 shape = SubResource("CapsuleShape3D_1812g")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
