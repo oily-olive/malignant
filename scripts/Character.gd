@@ -55,6 +55,7 @@ var dead: bool = false
 @onready var stepsound := $walk_sound as AudioStreamPlayer3D
 @onready var revolver := $CameraRoot/Camera3D/plchld_revolver_better
 @onready var shotgun := $CameraRoot/Camera3D/new_shotgun
+@onready var rocket_launcher := $CameraRoot/Camera3D/rocket_launcher
 @onready var ch := $CameraRoot2D/ui_container_center/crosshair
 @onready var cam_d := $CameraRoot/Camera3D/cam_direction as Node3D
 @onready var melee_area = $CameraRoot/Camera3D/melee_area as Area3D
@@ -310,6 +311,9 @@ func _physics_process(delta):
 		if weapon_handler.get_visible_weapon() == shotgun:
 			shoot_revshotgun()
 			revshotgun_alt()
+		if weapon_handler.get_visible_weapon() == rocket_launcher:
+			rocket_launcher_primary()
+			rocket_launcher_secondary()
 	
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		#insert weapon handling here
@@ -486,6 +490,17 @@ func ammo_alternation():
 		return 3.0
 	else:
 		return 0.000000000000000000000000000000000000000000000000000000000000000001 #if someone can figure out how to get the ammo count to a value other than the intended ones they deserve a little treat
+
+func rocket_launcher_primary():
+	if Input.is_action_just_pressed("primaryFire"):
+		print("fireball!")
+var ice_stagger: bool = false
+func rocket_launcher_secondary():
+	if Input.is_action_pressed("secondaryFire") and !ice_stagger:
+		ice_stagger = true
+		print("ice!")
+		await get_tree().create_timer(0.25).timeout
+		ice_stagger = false
 #style
 func style_timeout():
 	STYLE_TIMEOUT = STYLE_TIMEOUT + (20.0 / (COMBO))
@@ -526,7 +541,7 @@ func reset_rotation_counter():
 	await get_tree().create_timer(0.25).timeout
 	amount_rotated = 0.0
 
-func hitscan(raycast, barrel, raycast_end, damage: float, draw_tracer: bool, destroy_projectiles: bool, record_damage: bool):
+func hitscan(raycast: RayCast3D, barrel, raycast_end, damage: float, draw_tracer: bool, destroy_projectiles: bool, record_damage: bool):
 	instanceRaycast = bulletTrail.instantiate()
 	var bullet_hole = bullet_decal.instantiate()
 	if raycast.is_colliding():
@@ -540,9 +555,7 @@ func hitscan(raycast, barrel, raycast_end, damage: float, draw_tracer: bool, des
 			raycast.get_collider().explode()
 		if !raycast.get_collider().is_in_group("enemies") and !raycast.get_collider().is_in_group("projectiles"):
 			instanceRaycast.trigger_particle(raycast.get_collision_point(), barrel.global_position)
-			bullet_hole.position = raycast.get_collision_point()
-			if raycast.get_collision_normal() != Vector3.UP and raycast.get_collision_normal() != Vector3.DOWN:
-				bullet_hole.set_rotation_degrees(raycast.get_collision_normal() * 180)
+			bullet_hole.spawn(raycast.get_collision_point(), raycast.get_collision_normal())
 	elif draw_tracer == true:
 		instanceRaycast.init(barrel.global_position, raycast_end.global_position)
 	get_parent().add_child(instanceRaycast)

@@ -17,8 +17,9 @@ var temperature: int = 0
 var frozen: bool = false
 var on_fire: bool = false
 var stunned: bool = false
+var blood = load("res://scenes/effects/blood.tscn") as PackedScene
 
-func find_scene_root(obj):
+func find_scene_root():
 	#if obj is Node3D:
 		#if not obj.get_parent() is Node3D:
 			#world = obj
@@ -58,11 +59,12 @@ func _ready():
 		printerr("No navigation agent selected for this enemy; deleting...")
 		die()
 	health = max_health
-	find_scene_root(self)
-	await get_tree().create_timer(0.1).timeout
+	find_scene_root()
+	await get_tree().create_timer(0.001).timeout
 	find_player()
 	world.number_of_living_enemies += 1
 
+@warning_ignore("unused_parameter")
 func _process(delta):
 	update_nav_target()
 	handle_temp()
@@ -81,6 +83,7 @@ func die():
 			obj.disabled = true
 	emit_signal("enemy_died")
 	world.number_of_living_enemies -= 1
+	print(str(health))
 	await get_tree().create_timer(0.5).timeout
 	queue_free()
 func gib():
@@ -90,23 +93,32 @@ func gib():
 signal enemy_hit
 func get_hit(damage: float, temperature_gain: int = 0):
 	emit_signal("enemy_hit")
-	if damage > health:
-		if damage > health * 1.5:
+	var create_blood = blood.instantiate()
+	create_blood.global_position = Vector3(self.global_position.x, self.global_position.y + (max_enemy_radius * 1.1), self.global_position.z)
+	get_parent().add_child(create_blood)
+	var actual_damage = damage
+	if frozen:
+		actual_damage *= 1.5
+	if actual_damage >= health:
+		if actual_damage >= health * 1.5:
 			gib()
 		else:
 			die()
-	elif !frozen:
-		health -= damage
 	else:
-		health -= 1.5 * damage
+		health -= actual_damage
 	temperature += temperature_gain
 
+var just_burned: bool = false
+var burn_reset: bool = false
 func handle_temp():
 	if on_fire and frozen:
 		get_hit(5)
 		temperature = 0
 		on_fire =false
 		frozen = false
+	if on_fire and !just_burned:
+		just_burned = true
+		get_hit(0.25)
 		
 	if temperature >= 100:
 		on_fire = true
@@ -123,12 +135,18 @@ func handle_temp():
 		frozen = false
 	if temperature < 0:
 		temperature += 1
+	if just_burned and !burn_reset:
+		burn_reset = true
+		await get_tree().create_timer(1).timeout
+		just_burned = false
+		burn_reset = false
 	
 signal attacking
 func attack():
 	emit_signal("attacking")
 
 func parry():
-	stunned = true
-	get_hit(3)
+	pass
+	#stunned = true
+	#get_hit(3)
 	
