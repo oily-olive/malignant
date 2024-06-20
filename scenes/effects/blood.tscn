@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://cw0jrjalpacw4"]
+
+[ext_resource type="Script" path="res://scripts/blood.gd" id="1_geptm"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ebu5k"]
+points = PackedVector3Array(0, 0.11, 0, 0, -0.1, 0, 0.1, 0, 0, -0.1, 0, 0, 0, 0, 0.1, 0, 0, -0.1)
+
+[sub_resource type="Curve" id="Curve_f0yar"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.461538, 0.417582), 0.0, 0.0, 0, 0, Vector2(0.620879, 0.252747), 0.0, 0.0, 0, 0, Vector2(0.648352, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1hg30"]
+cull_mode = 2
+albedo_color = Color(0.552941, 0, 0, 1)
+billboard_mode = 2
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_1vgbw"]
+material = SubResource("StandardMaterial3D_1hg30")
+size = 0.1
+section_length = 0.02
+curve = SubResource("Curve_f0yar")
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+motion_mode = 1
+script = ExtResource("1_geptm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_ebu5k")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("RibbonTrailMesh_1vgbw")

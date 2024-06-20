@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://ca5tnmi76edba"]
+
+[ext_resource type="Texture2D" uid="uid://ujjioxkglfgr" path="res://sprites/placeholder_blood.png" id="1_r4a1r"]
+[ext_resource type="Script" path="res://scripts/blood_decal.gd" id="2_apuq4"]
+
+[node name="Decal" type="Decal"]
+size = Vector3(2, 1, 2)
+texture_albedo = ExtResource("1_r4a1r")
+script = ExtResource("2_apuq4")
