@@ -1,6 +1,7 @@
 extends Node3D
 
 func spawn(pos: Vector3, normal: Vector3):
+	position = pos
 	await tree_entered
 	if normal == Vector3.UP or normal == Vector3.DOWN:
 		$Decal.rotation.x = 0
