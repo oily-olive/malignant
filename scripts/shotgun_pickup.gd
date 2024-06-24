@@ -8,13 +8,6 @@ func _process(delta):
 	
 func _on_area_3d_body_entered(body):
 	if body.is_in_group("player"):
-		if body.weapon_handler.Weapons.x == 0:
-			body.weapon_handler.Weapons.x = 2
-		elif body.weapon_handler.Weapons.y == 0:
-			body.weapon_handler.Weapons.y = 2
-		elif body.weapon_handler.Weapons.z == 0:
-			body.weapon_handler.Weapons.z = 2
-		else:
-			print("too many weapons!")
+		body.weapon_handler.pickup_weapon(2)
 		body.weapon_handler.handle_weapons(body.WEAPON)
 		queue_free()

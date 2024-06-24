@@ -14,7 +14,6 @@ func _physics_process(delta):
 		#$music.play()
 	pass
 
-
 func _on_out_of_bounds_body_entered(body):
 	if body.is_in_group("player"):
 		body.set_position(Vector3(0,5,0))

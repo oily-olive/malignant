@@ -6,7 +6,7 @@ var alpha = 1.0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	self.material_override.albedo_color = Color("ffff00ff")
-	var duplicate_material = material_override.duplicate()
+	var duplicate_material = material_override.duplicate() # HACK: what the hell?
 	material_override = duplicate_material
 	await get_tree().create_timer(0.15).timeout
 	queue_free()

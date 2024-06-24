@@ -160,6 +160,7 @@ func parry():
 	pass
 	#stunned = true
 	#get_hit(3)
+
 func find_angle():
 	if sprite != null:
 		var sprite_anchor = sprite.get_parent()

@@ -8,12 +8,12 @@ func spawn(pos: Vector3, normal: Vector3):
 	else:
 		look_at(pos + normal)
 	rotate(normal, randf_range(0, 2*PI))
-	var sprite_randomizer = randi_range(0, 10000)
-	if sprite_randomizer == 42:
+	if randi_range(0, 10000) == 42:
 		return
 	else:
-		var sprite_randomizer_2 = randi_range(1, 7)
-		var sprite_dict = {"1": "res://sprites/blood_splatters/blood_0.png", "2": "res://sprites/blood_splatters/blood_2.png", "3": "res://sprites/blood_splatters/blood_3.png", "4": "res://sprites/blood_splatters/blood_4.png", "5": "res://sprites/blood_splatters/blood_5.png", "6": "res://sprites/blood_splatters/blood_6.png", "7": "res://sprites/blood_splatters/blood_7.png"}
-		$Decal.texture_albedo = load(sprite_dict[str(sprite_randomizer_2)])
-
-
+		var texture_i = randi_range(1, 7)
+		var sprite_base = "res://sprites/blood_splatters/blood_*.png"
+		var sprites = []
+		for i in range(0, 7):
+			sprites.append(sprite_base.replace("*", str(i)))
+		$Decal.texture_albedo = load(sprites[texture_i])
