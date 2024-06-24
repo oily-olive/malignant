@@ -3,7 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://cvicw4dfw684h" path="res://sprites/bullet_hole.png" id="1_nlfab"]
 [ext_resource type="Script" path="res://scripts/bullet_hole.gd" id="2_2fqn3"]
 
-[node name="Decal" type="Decal"]
+[node name="Node3D" type="Node3D"]
+script = ExtResource("2_2fqn3")
+
+[node name="Decal" type="Decal" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 size = Vector3(0.1, 0.001, 0.1)
 texture_albedo = ExtResource("1_nlfab")
-script = ExtResource("2_2fqn3")

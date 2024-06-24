@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://scripts/Character.gd" id="1_k2cq5"]
 [ext_resource type="PackedScene" uid="uid://c7ejmxrhcb08p" path="res://scenes/new_revolver_good.tscn" id="2_t7emm"]
 [ext_resource type="PackedScene" uid="uid://b5ullklw3cyxk" path="res://scenes/shotgun.tscn" id="3_xhexq"]
-[ext_resource type="PackedScene" uid="uid://cdank381erh0u" path="res://scenes/double_shotty.tscn" id="4_pyyou"]
 [ext_resource type="Material" uid="uid://dw6webk13k0hj" path="res://materials/psx_filter.tres" id="5_loits"]
 [ext_resource type="LabelSettings" uid="uid://c6i5e62bqc3jv" path="res://label thingies/font1.tres" id="6_6cijo"]
 [ext_resource type="Script" path="res://scripts/weapon_handler.gd" id="6_a5a7g"]
@@ -13,6 +12,11 @@
 [ext_resource type="LabelSettings" uid="uid://igg7jl8mx8i2" path="res://label thingies/font_title.tres" id="9_hclnr"]
 [ext_resource type="AudioStream" uid="uid://l8hvc2a5jbfk" path="res://sound/sfx/jump_impact_short.wav" id="9_mox8n"]
 [ext_resource type="AudioStream" uid="uid://cg33iw1wpt1mb" path="res://sound/sfx/hitstop.ogg" id="11_l448n"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_7037x"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 1.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_t1j6g"]
 material = ExtResource("5_loits")
@@ -60,9 +64,10 @@ visible = false
 transform = Transform3D(0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, 0.374086, -0.376776, -0.541138)
 visible = false
 
-[node name="double_shotty" parent="CameraRoot/Camera3D" instance=ExtResource("4_pyyou")]
-transform = Transform3D(0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, 0.374, -0.377, -0.541)
+[node name="rocket_launcher" type="MeshInstance3D" parent="CameraRoot/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.55145, -0.228181, -0.464003)
 visible = false
+mesh = SubResource("CylinderMesh_7037x")
 
 [node name="hitscan_01" type="RayCast3D" parent="CameraRoot/Camera3D"]
 target_position = Vector3(0, 0, -100)

@@ -1,6 +1,6 @@
 extends Node3D
 
-var player : Node3D
+var player: Player
 @onready var oob = $out_of_bounds
 
 func _ready():

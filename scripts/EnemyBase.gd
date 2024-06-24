@@ -9,8 +9,6 @@ var health
 signal world_found #emitted on find_scene_root success
 signal player_found #emitted on find_player success
 signal enemy_died
-@export var has_head: bool
-@export var head: Node3D
 var dead: bool = false
 @export var max_enemy_radius: float = 1
 var temperature: int = 0
@@ -18,6 +16,7 @@ var frozen: bool = false
 var on_fire: bool = false
 var stunned: bool = false
 var blood = load("res://scenes/effects/blood.tscn") as PackedScene
+@export var sprite: Sprite3D
 
 func find_scene_root():
 	#if obj is Node3D:
@@ -52,9 +51,6 @@ func update_nav_target():
 			updating_target = false
 
 func _ready():
-	if head == null and has_head:
-		printerr("No head selected for this enemy; deleting...")
-		die()
 	if nav_agent == null:
 		printerr("No navigation agent selected for this enemy; deleting...")
 		die()
@@ -70,10 +66,10 @@ func _process(delta):
 	handle_temp()
 	if !dead:
 		move_and_slide()
-	if has_head and player != null:
-		head.look_at(player.global_position)
 	if health <= 0.0:
 		die()
+	if player != null:
+		find_angle()
 
 func die():
 	dead = true
@@ -82,31 +78,46 @@ func die():
 		if obj is CollisionShape3D:
 			obj.disabled = true
 	emit_signal("enemy_died")
-	world.number_of_living_enemies -= 1
+	var create_blood = blood.instantiate()
+	create_blood.global_position = Vector3(self.global_position.x, self.global_position.y + (max_enemy_radius * 1.1), self.global_position.z)
+	bleed(create_blood, 15)
 	print(str(health))
 	await get_tree().create_timer(0.5).timeout
+	world.number_of_living_enemies -= 1
 	queue_free()
 func gib():
 	print("gibbed")
 	player.stylebonus_gibbed()
+	var create_blood = blood.instantiate()
+	create_blood.global_position = Vector3(self.global_position.x, self.global_position.y + (max_enemy_radius * 1.1), self.global_position.z)
+	bleed(create_blood, 15)
 	die()
 signal enemy_hit
 func get_hit(damage: float, temperature_gain: int = 0):
-	emit_signal("enemy_hit")
-	var create_blood = blood.instantiate()
-	create_blood.global_position = Vector3(self.global_position.x, self.global_position.y + (max_enemy_radius * 1.1), self.global_position.z)
-	get_parent().add_child(create_blood)
-	var actual_damage = damage
-	if frozen:
-		actual_damage *= 1.5
-	if actual_damage >= health:
-		if actual_damage >= health * 1.5:
-			gib()
+	if !dead:
+		emit_signal("enemy_hit")
+		var number_of_blood = int(damage * 8)
+		if number_of_blood == 0:
+			number_of_blood = 1
+		var create_blood = blood.instantiate()
+		create_blood.global_position = Vector3(self.global_position.x, self.global_position.y + (max_enemy_radius * 1.1), self.global_position.z)
+		bleed(create_blood, number_of_blood)
+		var actual_damage = damage
+		if frozen:
+			actual_damage *= 1.5
+		if actual_damage >= health:
+			if actual_damage >= health * 1.5:
+				gib()
+			else:
+				die()
 		else:
-			die()
-	else:
-		health -= actual_damage
-	temperature += temperature_gain
+			health -= actual_damage
+		temperature += temperature_gain
+
+func bleed(blood, number):
+	if number != 0:
+		get_parent().add_child(blood)
+		bleed(blood, number - 1)
 
 var just_burned: bool = false
 var burn_reset: bool = false
@@ -149,4 +160,14 @@ func parry():
 	pass
 	#stunned = true
 	#get_hit(3)
+func find_angle():
+	if sprite != null:
+		var sprite_anchor = sprite.get_parent()
+		sprite_anchor.look_at(Vector3(player.position.x, sprite_anchor.global_position.y, player.position.z))
+		var rotate_amount
+		if sprite_anchor.rotation_degrees.y < 0:
+			rotate_amount = 360 + int(sprite_anchor.rotation_degrees.y) + 22.5
+		else:
+			rotate_amount = int(sprite_anchor.rotation_degrees.y) + 22.5
+		sprite.frame = rotate_amount / 45
 	

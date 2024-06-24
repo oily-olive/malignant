@@ -1,0 +1,54 @@
+[gd_scene load_steps=7 format=3 uid="uid://p4m8qyk2n42e"]
+
+[ext_resource type="Script" path="res://scripts/bounce_pad.gd" id="1_d8xlj"]
+[ext_resource type="Script" path="res://addons/cyclops_level_builder/nodes/cyclops_block.gd" id="2_50ms1"]
+[ext_resource type="Script" path="res://addons/cyclops_level_builder/resources/convex_block_data.gd" id="3_6jjgm"]
+[ext_resource type="Material" uid="uid://cveieyb35bc3x" path="res://materials/placeholder.tres" id="4_0ioom"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_oh3gg"]
+size = Vector3(1.9, 0.5, 1.9)
+
+[sub_resource type="Resource" id="Resource_w8rjs"]
+script = ExtResource("3_6jjgm")
+selected = false
+active = false
+collsion = true
+physics_layer = 0
+physics_mask = 0
+vertex_points = PackedVector3Array(0, 0.25, 0, 0, 0.25, 2, 0, 0, 2, 0, 0, 0, 2, 0.25, 0, 2, 0.25, 2, 2, 0, 2, 2, 0, 0)
+vertex_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0)
+edge_selected = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+face_material_indices = PackedInt32Array(0, 0, 0, 0, 0, 0)
+face_uv_transform = Array[Transform2D]([Transform2D(1, 0, 0, 1, 1, 0), Transform2D(1, 0, 0, 1, 1, 0), Transform2D(1, 0, 0, 1, 1, 1), Transform2D(1, 0, 0, 1, 1, 0), Transform2D(1, 0, 0, 1, 1, 1), Transform2D(1, 0, 0, 1, 1, 0)])
+face_visible = PackedByteArray(1, 1, 1, 1, 1, 1)
+face_color = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+face_selected = PackedByteArray(0, 0, 0, 0, 0, 0)
+face_vertex_face_index = PackedInt32Array(0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5)
+face_vertex_vertex_index = PackedInt32Array(0, 1, 2, 3, 7, 6, 5, 4, 1, 0, 4, 5, 2, 1, 5, 6, 3, 2, 6, 7, 0, 3, 7, 4)
+face_vertex_normal = PackedVector3Array(-1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1)
+face_vertex_color = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+edge_vertex_indices = PackedInt32Array(0, 1, 1, 2, 2, 3, 3, 0, 7, 6, 6, 5, 5, 4, 4, 7, 0, 4, 5, 1, 6, 2, 7, 3)
+edge_face_indices = PackedInt32Array(0, 2, 0, 3, 0, 4, 0, 5, 1, 4, 1, 3, 1, 2, 1, 5, 2, 5, 2, 3, 3, 4, 4, 5)
+face_vertex_count = PackedInt32Array(4, 4, 4, 4, 4, 4)
+face_vertex_indices = PackedInt32Array(0, 1, 2, 3, 7, 6, 5, 4, 1, 0, 4, 5, 2, 1, 5, 6, 3, 2, 6, 7, 0, 3, 7, 4)
+active_vertex = -1
+active_edge = -1
+active_face = -1
+active_face_vertex = 0
+
+[node name="bounce_pad" type="Node3D"]
+script = ExtResource("1_d8xlj")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_oh3gg")
+
+[node name="block0" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
+script = ExtResource("2_50ms1")
+block_data = SubResource("Resource_w8rjs")
+materials = Array[Material]([ExtResource("4_0ioom")])
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

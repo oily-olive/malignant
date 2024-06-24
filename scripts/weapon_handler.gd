@@ -2,7 +2,7 @@ extends Node3D
 class_name WeaponHandler
 
 @onready var player = $"../../.." as Player
-var Weapons = Vector3i(0,0,0)
+var Weapons = Vector3i(2,0,0)
 var none = 0
 #revolver = 1
 #shotgun = 2
