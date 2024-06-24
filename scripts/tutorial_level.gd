@@ -1,12 +1,13 @@
 extends Node3D
 
 var player: Player
+
 @onready var oob = $out_of_bounds
 @onready var moving_door_1 = $non_navigable_geometry/moving_door_1
 @onready var enemy_spawner_01 = $enemy_spawner_01 as Spawner
 
 func _ready():
-	await get_tree().create_timer(.1).timeout
+	await get_tree().create_timer(.1).timeout # ??
 	for node in get_children():
 		if node.is_in_group("player"):
 			player = node

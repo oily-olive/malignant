@@ -27,10 +27,9 @@ func _process(delta):
 	if number_of_living_enemies == 0 and enemy_control:
 		enemy_control = false
 		emit_signal("all_enemies_dead")
-#
+
 #func splat():
 	#player.stylebonus_splat()
-
 
 func _on_out_of_bounds_body_entered(body):
 	if body.is_in_group("player"):

@@ -10,11 +10,9 @@ const SPEED = 100
 func _ready():
 	pass # Replace with function body.
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var delay = randf_range(0.0, 0.18)
-	await get_tree().create_timer(delay).timeout
+	await get_tree().create_timer(randf_range(0.0, 0.18)).timeout
 	despawn_timer()
 	position += transform.basis * Vector3(0, 0, SPEED) * delta
 	if rayCastBullet.is_colliding():

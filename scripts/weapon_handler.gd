@@ -8,6 +8,17 @@ var none = 0
 #shotgun = 2
 #rocket launcher = 3
 
+func pickup_weapon(id: int):
+	# HACK: terrible way to find first open slot, someone kill me
+	if Weapons.x == 0:
+		Weapons.x = id
+	elif Weapons.y == 0:
+		Weapons.y = id
+	elif Weapons.z == 0:
+		Weapons.z = id
+	else:
+		printerr("error: no open weapon slots")
+
 func handle_weapons(slot: int):
 	var weapon_slot
 	if slot == 1:
@@ -20,46 +31,47 @@ func handle_weapons(slot: int):
 		printerr("error: weapon slot value greater than 3 or less than 1")
 	
 #thanks to my awesome gf raine for teaching me how dictionaries work <3
-	var visible_dict = {
-		"0": {
+# you can thank her again for rewriting this as an array
+	var weapon_states = [
+		{
 			"revolver": false,
 			"shotgun": false,
 			"rocket_launcher": false
 		},
-		"1": {
+		{
 			"revolver": true,
 			"shotgun": false,
 			"rocket_launcher": false
 		},
-		"2": {
+		{
 			"revolver": false,
 			"shotgun": true,
 			"rocket_launcher": false
 		},
-		"3": {
+		{
 			"revolver": false,
 			"shotgun": false,
 			"rocket_launcher": true
 		}
-	}
+	]
 
-	player.revolver.visible = visible_dict[str(weapon_slot)]["revolver"]
-	player.shotgun.visible = visible_dict[str(weapon_slot)]["shotgun"]
-	player.rocket_launcher.visible = visible_dict[str(weapon_slot)]["rocket_launcher"]
+	for weapon in [player.revolver, player.shotgun, player.rocket_launcher]:
+		weapon.visible = weapon_states[weapon_slot][weapon.name]
 		
 func get_visible_weapon():
+	# this looks longer now, but it repeats less and is more readable
+	var weapon_frame = -1
+	var visible_weapon = null
 	if player.revolver.visible:
-		player.ch.visible = true
-		player.ch.frame = 0
-		return player.revolver
+		visible_weapon = player.revolver
+		weapon_frame = 0
 	elif player.shotgun.visible:
-		player.ch.visible = true
-		player.ch.frame = 5
-		return player.shotgun
+		visible_weapon = player.shotgun
+		weapon_frame = 5
 	elif player.rocket_launcher.visible:
-		player.ch.visible = true
-		player.ch.frame = 5
-		return player.rocket_launcher
-	else:
-		player.ch.visible = false
-		return null
+		visible_weapon = player.rocket_launcher
+		weapon_frame = 5
+	player.ch.visible = visible_weapon != null
+	if visible_weapon:
+		player.ch.frame = weapon_frame
+	return visible_weapon

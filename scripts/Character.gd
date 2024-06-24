@@ -4,21 +4,28 @@ class_name Player
 var SPEED_BOOST = 1.0
 @export var NORMAL_SPEED = 6.5
 var SPRINT_SPEED = 34.75/13.0
+var MOVE_SPEED = 6.5
+
 @export var JUMP_VELOCITY = 130.0
 @export var WALL_JUMP_VELOCITY = 12.0
 @export var WALL_JUMP_COUNTER = 4
-var STAMINA = 100.0
+
 @export var MOUSE_SENSITIVITY = 0.005
+
+var STAMINA = 100.0
 @export var MAX_STAMINA = 100.0
-var MOVE_SPEED = 6.5
-var CONCENTRATION = 0.0
-@export var MAX_CONCENTRATION = 100.0
 @export var STAMINA_REGEN_COOLDOWN = 1.0
 @export var STAMINA_REGEN_COOLDOWN_MAX = 1.0
+
+var CONCENTRATION = 0.0
+@export var MAX_CONCENTRATION = 100.0
+
 var HP = 100.0
 @export var MAX_HP = 100.0
 var MAX_OVERHEAL = 2.0 * MAX_HP
+
 var WEAPON = 1
+
 var BOOST_DURATION = 0.0
 var db_firemode = 0
 var revAMMO = 6
@@ -30,20 +37,28 @@ var COMBO = 0
 var speedCashout = false
 var topSpeedChecker = false
 var amount_rotated = 0.0
+
 var shotgun_damage
+
 var is_sliding = false
 var is_slamming = false
 var slam_hit = false
+
 var jump_add = false
+
 var melee_charge = 0.0
 var melee_is_charged = false
+
 var damage_since_last_shotgun_reload = 0.0
 var dead: bool = false
+
 @onready var neck := $CameraRoot as Node3D
 @onready var cam := $CameraRoot/Camera3D as Camera3D
+
 @onready var revolverAnim := $CameraRoot/Camera3D/plchld_revolver_better/AnimationPlayer as AnimationPlayer
 @onready var doublebarrelAnim := $CameraRoot/Camera3D/double_shotty/AnimationPlayer as AnimationPlayer
 @onready var shottyAnim := $CameraRoot/Camera3D/new_shotgun/AnimationPlayer as AnimationPlayer
+
 @onready var raycast_r := $CameraRoot/Camera3D/hitscan_01 as RayCast3D
 @onready var raycast_db_u := $CameraRoot/Camera3D/hitscan_06 as RayCast3D
 @onready var raycast_db_l := $CameraRoot/Camera3D/hitscan_07 as RayCast3D
@@ -52,10 +67,13 @@ var dead: bool = false
 @onready var raycastEnd_db_u := $CameraRoot/Camera3D/hitscan_06/hitscan_end as Node3D
 @onready var raycastEnd_db_l := $CameraRoot/Camera3D/hitscan_07/hitscan_end as Node3D
 @onready var cross_c := $CameraRoot/Camera3D/hitscan_01/crossover_checkas as RayCast3D
+
 @onready var stepsound := $walk_sound as AudioStreamPlayer3D
+
 @onready var revolver := $CameraRoot/Camera3D/plchld_revolver_better
 @onready var shotgun := $CameraRoot/Camera3D/new_shotgun
 @onready var rocket_launcher := $CameraRoot/Camera3D/rocket_launcher
+
 @onready var ch := $CameraRoot2D/ui_container_center/crosshair
 @onready var cam_d := $CameraRoot/Camera3D/cam_direction as Node3D
 @onready var melee_area = $CameraRoot/Camera3D/melee_area as Area3D
@@ -78,10 +96,9 @@ var t_bob = 0.0
 @onready var dbBarrel_l := $CameraRoot/Camera3D/double_shotty/Armature/Skeleton3D/Cylinder_001/Cylinder_001/lower_barrel_end as Node3D
 @onready var rsBarrel := $CameraRoot/Camera3D/new_shotgun/Cube_002/barrel_end as Node3D
 
-var proyectile #on ready for non hitscan weapons
 var bulletTrail = load("res://scenes/bullet_trail.tscn")
-var instanceRaycast
 var bullet_decal = load("res://scenes/bullet_hole.tscn")
+var instanceRaycast
 
 const BASE_FOV = 100 #base camera has 100° FOV
 const FOV_MULTIPLIER = 1.01
@@ -170,6 +187,16 @@ var _cur_frame = 0
 @export var _jump_frame_grace = 5
 var _last_frame_was_on_floor = -_jump_frame_grace - 1
 
+func is_bounce_allowed():
+	return raycast_melee.is_colliding() \
+		and Input.is_action_just_pressed("melee") \
+		and WALL_JUMP_COUNTER > 0 \
+		and not raycast_melee.get_collider().is_in_group("enemies") \
+		and velocity.normalized().dot(raycast_melee.get_collision_normal()) <= 0.0 \
+		and raycast_melee.get_collision_normal().y < 0.55 \
+		and raycast_melee.get_collision_normal().y > -0.45 \
+		and velocity.x + velocity.z != 0.0
+		
 var just_landed: bool = false
 var already_jumped: bool = false
 func _physics_process(delta):
@@ -182,11 +209,12 @@ func _physics_process(delta):
 		just_landed = true
 		if Input.is_action_just_pressed("slide"):
 			ground_slam()
-		if raycast_melee.is_colliding() and Input.is_action_just_pressed("melee") and WALL_JUMP_COUNTER > 0 and !raycast_melee.get_collider().is_in_group("enemies") and velocity.normalized().dot(raycast_melee.get_collision_normal()) <= 0.0 and raycast_melee.get_collision_normal().y < 0.55 and raycast_melee.get_collision_normal().y > -0.45 and velocity.x + velocity.z != 0.0:
+		if is_bounce_allowed():
 			velocity = velocity.bounce(raycast_melee.get_collision_normal())
 			velocity.y += 3.25
 			WALL_JUMP_COUNTER -= 1
-	# UI
+
+	##### UI #####
 	$CameraRoot2D/ui_container_bottomleft/StaminaLabel.text = "STAMINA: " + str(int(STAMINA))
 	$CameraRoot2D/ui_container_bottomleft/HPLabel.text = "HP: " + str(int(HP))
 
@@ -227,7 +255,7 @@ func _physics_process(delta):
 			$CollisionShape3D.disabled = false
 			$CollisionShape3D2.disabled = true
 
-		#STAMINA
+		##### STAMINA #####
 		if not Input.is_action_pressed("sprint") && STAMINA_REGEN_COOLDOWN == STAMINA_REGEN_COOLDOWN_MAX && STAMINA < MAX_STAMINA && is_on_floor():
 			STAMINA = STAMINA + 0.75
 		if STAMINA > MAX_STAMINA:
@@ -278,7 +306,7 @@ func _physics_process(delta):
 			velocity.x = move_toward(velocity.x, 0, 0.25)
 			velocity.z = move_toward(velocity.z, 0, 0.25)
 	
-	#headbob
+	##### headbob #####
 	if is_sliding == false:
 		t_bob += delta * velocity.length() * float(is_on_floor())
 		cam.transform.origin = headbob(t_bob)
@@ -289,7 +317,7 @@ func _physics_process(delta):
 			if $slam_check.get_collider().is_in_group("breakable_object"):
 				$slam_check.get_collider().break_o()
 	
-	#weapon handling
+	##### weapon handling #####
 	if Engine.time_scale != 0.0:
 		if Input.is_action_just_pressed("weaponScrollUp"):
 			WEAPON = WEAPON - 1
@@ -336,9 +364,7 @@ func _physics_process(delta):
 			melee_charge = 0.0
 			already_punched = false
 		
-	#FOV
-	
-
+	##### FOV #####
 	var targetFov = BASE_FOV + (FOV_MULTIPLIER * velocityClamped * 0.75)
 	cam.fov = lerp(cam.fov, targetFov, delta * 8)
 	
@@ -347,14 +373,14 @@ func _physics_process(delta):
 	_snap_down_to_stairs_check()
 	
 	if Engine.time_scale != 0.0:
-	#concentration
+		##### CONCENTRATION #####
 		if CONCENTRATION > MAX_CONCENTRATION:
 			CONCENTRATION = MAX_CONCENTRATION
 		if CONCENTRATION < 0.0:
 			CONCENTRATION = 0.0
 		$CameraRoot2D/ui_container_bottomleft/ConcentrationLabel.text = str(int(CONCENTRATION))
 		
-		#style
+		##### STYLE #####
 		if STYLE_TIMEOUT < 0:
 			STYLE_TIMEOUT = 0
 			
@@ -398,6 +424,7 @@ func _physics_process(delta):
 	
 	if HP <= 0:
 		die()
+	
 var already_punched = false
 func headbob(time) -> Vector3:
 	var pos = Vector3.ZERO
@@ -412,12 +439,14 @@ func shoot_revolver():
 				revolverAnim.play("recoil")
 				hitscan(raycast_r, revolverBarrel, raycastEnd_r, 1.0, true, false, false)
 				revAMMO -= 1
+
 func reload_revolver():
 	if !revolverAnim.is_playing():
 		var time = revAMMO
 		revAMMO = 0
 		await get_tree().create_timer((time + 1) / 3.0).timeout
 		revAMMO = 6
+
 var RSp_charge = 0.0
 var ricochet = load("res://scenes/ricochet.tscn")
 func revolver_special():
