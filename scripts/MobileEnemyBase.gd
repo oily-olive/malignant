@@ -4,9 +4,11 @@ class_name MobileEnemy
 @export var affected_by_gravity: bool = true
 @export var speed: float = 10.0
 @export var fall_damage_detection: RayCast3D
+@export var friction: float = 7.0
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var splatted: bool = false
+@onready var actual_friction = friction
 func _physics_process(delta):
 	if !dead:
 		fall_damage_detection.set_target_position(velocity.normalized() * max_enemy_radius * 2)
@@ -28,7 +30,7 @@ func get_launched_by_punch(direction: Vector3):
 		if not is_on_floor():
 			velocity = direction * 45.0
 		else:
-			velocity = (direction * 45.0) / 4
+			velocity = (direction * 45.0) / 4.0
 
 func get_launched_by_slam():
 	velocity.y += 20.0

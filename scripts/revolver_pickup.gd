@@ -8,6 +8,6 @@ func _process(delta):
 
 func _on_area_3d_body_entered(body):
 	if body.is_in_group("player"):
-		body-weapon_handler.pickup_weapon(1)
+		body.weapon_handler.pickup_weapon(1)
 		body.weapon_handler.handle_weapons(body.WEAPON)
 		queue_free()

@@ -6,7 +6,7 @@ var initial_velocity = 2.5
 var blood_decal = load("res://scenes/effects/blood_decal.tscn") as PackedScene
 
 func _ready():
-	var random_direction = Vector3(rand_range(-50, 50), 0, rand_range(-50, 50))
+	var random_direction = Vector3(randf_range(-50, 50), 0, randf_range(-50, 50))
 	var new_velocity = random_direction.normalized() * initial_velocity
 	velocity = Vector3(new_velocity.x, 1.0, new_velocity.z)
 
@@ -18,7 +18,7 @@ func _process(delta):
 	if collision_ray.is_colliding():
 		var collider = collision_ray.get_collider()
 		if !(collider is Player) and !(collider is Enemy) and !(collider is Area3D) and is_on_wall():
-			var spawn_blood = blood_decal.instance()
+			var spawn_blood = blood_decal.instantiate()
 			spawn_blood.spawn(collision_ray.get_collision_point(), collision_ray.get_collision_normal())
 			get_parent().add_child(spawn_blood)
 			queue_free()

@@ -14,6 +14,8 @@ func spawn(pos: Vector3, normal: Vector3):
 		var texture_i = randi_range(1, 7)
 		var sprite_base = "res://sprites/blood_splatters/blood_*.png"
 		var sprites = []
-		for i in range(0, 7):
+		for i in range(0, 8):
 			sprites.append(sprite_base.replace("*", str(i)))
+		if texture_i == 1:
+			texture_i = 0
 		$Decal.texture_albedo = load(sprites[texture_i])
