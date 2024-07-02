@@ -78,9 +78,6 @@ func die():
 		if obj is CollisionShape3D:
 			obj.disabled = true
 	emit_signal("enemy_died")
-	var create_blood = blood.instantiate()
-	create_blood.global_position = Vector3(self.global_position.x, self.global_position.y + (max_enemy_radius * 1.1), self.global_position.z)
-	bleed(create_blood, 15)
 	print(str(health))
 	await get_tree().create_timer(0.5).timeout
 	world.number_of_living_enemies -= 1
@@ -88,9 +85,6 @@ func die():
 func gib():
 	print("gibbed")
 	player.stylebonus_gibbed()
-	var create_blood = blood.instantiate()
-	create_blood.global_position = Vector3(self.global_position.x, self.global_position.y + (max_enemy_radius * 1.1), self.global_position.z)
-	bleed(create_blood, 15)
 	die()
 signal enemy_hit
 func get_hit(damage: float, temperature_gain: int = 0):
@@ -101,7 +95,7 @@ func get_hit(damage: float, temperature_gain: int = 0):
 			number_of_blood = 1
 		var create_blood = blood.instantiate()
 		create_blood.global_position = Vector3(self.global_position.x, self.global_position.y + (max_enemy_radius * 1.1), self.global_position.z)
-		bleed(create_blood, number_of_blood)
+		bleed(number_of_blood)
 		var actual_damage = damage
 		if frozen:
 			actual_damage *= 1.5
@@ -114,10 +108,12 @@ func get_hit(damage: float, temperature_gain: int = 0):
 			health -= actual_damage
 		temperature += temperature_gain
 
-func bleed(blood, number):
+func bleed(number):
 	if number != 0:
-		get_parent().add_child(blood)
-		bleed(blood, number - 1)
+		var instantiated_blood = blood.instantiate() as CharacterBody3D
+		instantiated_blood.global_position = Vector3(global_position.x, global_position.y + max_enemy_radius, global_position.z)
+		get_parent().add_child(instantiated_blood)
+		bleed(number - 1)
 
 var just_burned: bool = false
 var burn_reset: bool = false
@@ -131,19 +127,22 @@ func handle_temp():
 		just_burned = true
 		get_hit(0.25)
 		
-	if temperature >= 100:
+	if temperature >= 100 and !on_fire:
 		on_fire = true
-	if temperature <= 100:
+	if temperature <= 100 and on_fire:
 		await get_tree().create_timer(3).timeout
 		on_fire = false
+		temperature /= 2
 	if temperature > 0:
 		temperature -= 1
 	
-	if temperature <= -100:
+	if temperature <= -100 and !frozen:
 		frozen = true
-	if temperature >= -100:
+		print("enemy_frozen")
+	if temperature >= -100 and frozen:
 		await get_tree().create_timer(3).timeout
 		frozen = false
+		temperature /= 2
 	if temperature < 0:
 		temperature += 1
 	if just_burned and !burn_reset:

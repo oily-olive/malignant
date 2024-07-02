@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 @onready var collision_ray = $RayCast3D as RayCast3D
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
-var initial_velocity = 2.5
+var initial_velocity = randf_range(2.5, 3.75)
 var blood_decal = load("res://scenes/effects/blood_decal.tscn") as PackedScene
 
 func _ready():
@@ -12,12 +12,12 @@ func _ready():
 
 func _process(delta):
 	velocity.y -= gravity * delta
-	collision_ray.target_position = velocity.normalized()
+	collision_ray.target_position = velocity.normalized()/5
 	move_and_slide()
 
 	if collision_ray.is_colliding():
 		var collider = collision_ray.get_collider()
-		if !(collider is Player) and !(collider is Enemy) and !(collider is Area3D) and is_on_wall():
+		if !(collider is Player) and !(collider is Enemy) and !(collider is Area3D):
 			var spawn_blood = blood_decal.instantiate()
 			spawn_blood.spawn(collision_ray.get_collision_point(), collision_ray.get_collision_normal())
 			get_parent().add_child(spawn_blood)

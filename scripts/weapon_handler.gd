@@ -3,10 +3,13 @@ class_name WeaponHandler
 
 @onready var player = $"../../.." as Player
 var Weapons = Vector3i(2,0,0)
-var none = 0
+#var active_weapon = [get_visible_weapon(), player.WEAPON]
+
+#no weapon = 0
 #revolver = 1
 #shotgun = 2
 #rocket launcher = 3
+#cryogun = 4
 
 func pickup_weapon(id: int):
 	# HACK: terrible way to find first open slot, someone kill me
@@ -36,26 +39,36 @@ func handle_weapons(slot: int):
 		{
 			"revolver": false,
 			"shotgun": false,
-			"rocket_launcher": false
+			"rocket_launcher": false,
+			"cryogun": false
 		},
 		{
 			"revolver": true,
 			"shotgun": false,
-			"rocket_launcher": false
+			"rocket_launcher": false,
+			"cryogun": false
 		},
 		{
 			"revolver": false,
 			"shotgun": true,
-			"rocket_launcher": false
+			"rocket_launcher": false,
+			"cryogun": false
 		},
 		{
 			"revolver": false,
 			"shotgun": false,
-			"rocket_launcher": true
+			"rocket_launcher": true,
+			"cryogun": false
+		},
+		{
+			"revolver": false,
+			"shotgun": false,
+			"rocket_launcher": false,
+			"cryogun": true
 		}
 	]
 
-	for weapon in [player.revolver, player.shotgun, player.rocket_launcher]:
+	for weapon in [player.revolver, player.shotgun, player.rocket_launcher, player.cryogun]:
 		weapon.visible = weapon_states[weapon_slot][weapon.name]
 		
 func get_visible_weapon():
@@ -67,9 +80,12 @@ func get_visible_weapon():
 		weapon_frame = 0
 	elif player.shotgun.visible:
 		visible_weapon = player.shotgun
-		weapon_frame = 5
+		weapon_frame = 1
 	elif player.rocket_launcher.visible:
 		visible_weapon = player.rocket_launcher
+		weapon_frame = 2
+	elif player.cryogun.visible:
+		visible_weapon = player.cryogun
 		weapon_frame = 5
 	player.ch.visible = visible_weapon != null
 	if visible_weapon:
