@@ -10,4 +10,5 @@ script = ExtResource("2_apuq4")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 size = Vector3(2, 0.001, 2)
 texture_albedo = ExtResource("1_adktf")
+modulate = Color(0.388235, 0, 0, 0.533333)
 distance_fade_begin = 1.0

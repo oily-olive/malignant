@@ -1,12 +1,12 @@
-[gd_scene load_steps=21 format=3 uid="uid://ddg1hwbx1w5xl"]
+[gd_scene load_steps=24 format=3 uid="uid://ddg1hwbx1w5xl"]
 
 [ext_resource type="Script" path="res://scripts/Character.gd" id="1_k2cq5"]
-[ext_resource type="PackedScene" uid="uid://c7ejmxrhcb08p" path="res://scenes/new_revolver_good.tscn" id="2_t7emm"]
 [ext_resource type="PackedScene" uid="uid://b5ullklw3cyxk" path="res://scenes/shotgun.tscn" id="3_xhexq"]
-[ext_resource type="Material" uid="uid://dw6webk13k0hj" path="res://materials/psx_filter.tres" id="5_loits"]
 [ext_resource type="LabelSettings" uid="uid://c6i5e62bqc3jv" path="res://label thingies/font1.tres" id="6_6cijo"]
 [ext_resource type="Script" path="res://scripts/weapon_handler.gd" id="6_a5a7g"]
+[ext_resource type="Texture2D" uid="uid://bwga5hh1dl2un" path="res://sprites/weapons/shotgun_placeholder.png" id="7_17thg"]
 [ext_resource type="Texture2D" uid="uid://cyn03qprx6lvf" path="res://sprites/crosshairs.png" id="7_xtelh"]
+[ext_resource type="Script" path="res://scripts/weapons/base_weapon.gd" id="8_5fvck"]
 [ext_resource type="AudioStream" uid="uid://sx888bs81l4" path="res://sound/sfx/jump_impact_2.wav" id="8_5ooss"]
 [ext_resource type="Material" uid="uid://cveieyb35bc3x" path="res://materials/placeholder.tres" id="9_111fw"]
 [ext_resource type="LabelSettings" uid="uid://igg7jl8mx8i2" path="res://label thingies/font_title.tres" id="9_hclnr"]
@@ -18,12 +18,61 @@ top_radius = 0.1
 bottom_radius = 0.1
 height = 1.0
 
-[sub_resource type="BoxMesh" id="BoxMesh_t1j6g"]
-material = ExtResource("5_loits")
-size = Vector3(2, 2, 2)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_aq0is"]
 size = Vector3(0.5, 0.5, 1)
+
+[sub_resource type="Animation" id="Animation_8jhkw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_bgjvv"]
+resource_name = "recoil"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 0]
+}
+
+[sub_resource type="Animation" id="Animation_ydbnr"]
+resource_name = "reload"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0256e"]
+_data = {
+"RESET": SubResource("Animation_8jhkw"),
+"recoil": SubResource("Animation_bgjvv"),
+"reload": SubResource("Animation_ydbnr")
+}
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1812g"]
 radius = 0.49
@@ -46,21 +95,18 @@ length = 0.5
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 collision_mask = 3
 script = ExtResource("1_k2cq5")
-metadata/_edit_horizontal_guides_ = [300.0, -300.0]
-metadata/_edit_vertical_guides_ = [568.0, -568.0]
+metadata/_edit_horizontal_guides_ = [324.0, -324.0]
+metadata/_edit_vertical_guides_ = [576.0, -576.0]
 
 [node name="CameraRoot" type="Node3D" parent="."]
 
-[node name="Camera3D" type="Camera3D" parent="CameraRoot"]
+[node name="Camera3D" type="Node3D" parent="CameraRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.631373, 0)
-current = true
-fov = 100.0
 
-[node name="plchld_revolver_better" parent="CameraRoot/Camera3D" instance=ExtResource("2_t7emm")]
-transform = Transform3D(-0.15, 0, -2.26494e-08, 0, 0.15, 0, 2.26494e-08, 0, -0.15, 0.591, -0.344, -0.401)
+[node name="revolver" type="Node3D" parent="CameraRoot/Camera3D"]
 visible = false
 
-[node name="new_shotgun" parent="CameraRoot/Camera3D" instance=ExtResource("3_xhexq")]
+[node name="shotgun" parent="CameraRoot/Camera3D" instance=ExtResource("3_xhexq")]
 transform = Transform3D(0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, 0.374086, -0.376776, -0.541138)
 visible = false
 
@@ -69,40 +115,16 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.5514
 visible = false
 mesh = SubResource("CylinderMesh_7037x")
 
+[node name="cryogun_barrel" type="Node3D" parent="CameraRoot/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.215747, -0.863625)
+
 [node name="hitscan_01" type="RayCast3D" parent="CameraRoot/Camera3D"]
-target_position = Vector3(0, 0, -100)
+target_position = Vector3(0, 0, -1000)
 collide_with_areas = true
 debug_shape_custom_color = Color(0.670588, 0, 0, 1)
 
-[node name="crossover_check" type="RayCast3D" parent="CameraRoot/Camera3D/hitscan_01"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -19)
-target_position = Vector3(0, 0, -2)
-hit_from_inside = true
-
 [node name="hitscan_end" type="Node3D" parent="CameraRoot/Camera3D/hitscan_01"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -100)
-
-[node name="psx_filter" type="MeshInstance3D" parent="CameraRoot/Camera3D"]
-visible = false
-mesh = SubResource("BoxMesh_t1j6g")
-
-[node name="hitscan_06" type="RayCast3D" parent="CameraRoot/Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
-target_position = Vector3(0, -0.5, -100)
-collide_with_areas = true
-debug_shape_custom_color = Color(0, 1, 0, 1)
-
-[node name="hitscan_end" type="Node3D" parent="CameraRoot/Camera3D/hitscan_06"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, -100)
-
-[node name="hitscan_07" type="RayCast3D" parent="CameraRoot/Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
-target_position = Vector3(0, 0.5, -100)
-collide_with_areas = true
-debug_shape_custom_color = Color(0, 0, 1, 1)
-
-[node name="hitscan_end" type="Node3D" parent="CameraRoot/Camera3D/hitscan_07"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -100)
 
 [node name="hitscan_08" type="RayCast3D" parent="CameraRoot/Camera3D"]
 target_position = Vector3(0, 0, -1.25)
@@ -121,7 +143,23 @@ shape = SubResource("BoxShape3D_aq0is")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
 [node name="weapon_handler" type="Node3D" parent="CameraRoot/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 script = ExtResource("6_a5a7g")
+
+[node name="Camera3D" type="Camera3D" parent="CameraRoot/Camera3D"]
+fov = 100.0
+
+[node name="forward" type="Node3D" parent="CameraRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+
+[node name="backward" type="Node3D" parent="CameraRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+
+[node name="leftward" type="Node3D" parent="CameraRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+
+[node name="rightward" type="Node3D" parent="CameraRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
 
 [node name="CameraRoot2D" type="Node2D" parent="."]
 
@@ -172,6 +210,34 @@ texture = ExtResource("7_xtelh")
 hframes = 2
 vframes = 3
 
+[node name="ui_container_weapons" type="Control" parent="CameraRoot2D"]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 332.0
+offset_top = 169.0
+offset_right = 332.0
+offset_bottom = 169.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="shotgun" type="Sprite2D" parent="CameraRoot2D/ui_container_weapons"]
+scale = Vector2(0.325, 0.325)
+texture = ExtResource("7_17thg")
+hframes = 3
+vframes = 3
+frame = 1
+script = ExtResource("8_5fvck")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CameraRoot2D/ui_container_weapons/shotgun"]
+libraries = {
+"": SubResource("AnimationLibrary_0256e")
+}
+
 [node name="Camera2D" type="Camera2D" parent="CameraRoot2D"]
 
 [node name="ui_container_bottomright" type="VBoxContainer" parent="CameraRoot2D"]
@@ -187,10 +253,11 @@ offset_bottom = 317.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="SpeedLabel" type="Label" parent="CameraRoot2D/ui_container_bottomright"]
+[node name="misc_label" type="Label" parent="CameraRoot2D/ui_container_bottomright"]
 unique_name_in_owner = true
+visibility_layer = 2
 layout_mode = 2
-text = "SPEED: "
+text = "vd"
 label_settings = ExtResource("6_6cijo")
 
 [node name="ui_container_topright" type="VBoxContainer" parent="CameraRoot2D"]
@@ -300,6 +367,8 @@ layout_mode = 2
 [node name="pop_up_text" type="Label" parent="CameraRoot2D/pop_up_container"]
 layout_mode = 2
 label_settings = ExtResource("6_6cijo")
+
+[node name="cryogun" type="Node2D" parent="CameraRoot2D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)

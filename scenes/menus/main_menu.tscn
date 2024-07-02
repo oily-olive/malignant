@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://bdxm02ero8v4g"]
+[gd_scene load_steps=10 format=3 uid="uid://bdxm02ero8v4g"]
 
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_akd54"]
 [ext_resource type="LabelSettings" uid="uid://igg7jl8mx8i2" path="res://label thingies/font_title.tres" id="2_rfljo"]
 [ext_resource type="AudioStream" uid="uid://bpip6j1lxw2ph" path="res://sound/music/main_menu.mp3" id="3_kcj8r"]
+[ext_resource type="PackedScene" uid="uid://djimmd8k58vry" path="res://scenes/menus/options/options_menu.tscn" id="4_oomn2"]
 [ext_resource type="Material" uid="uid://ckfggkfyj815r" path="res://materials/blood_clouds_material.tres" id="4_vuhgc"]
 [ext_resource type="Material" uid="uid://bo4fq4d1qd5se" path="res://materials/sky_shader.tres" id="5_egkvu"]
 
@@ -29,7 +30,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_akd54")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="main_menu_container" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -41,52 +42,51 @@ theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="main_menu_container"]
 layout_mode = 2
 theme_override_constants/separation = 60
 
-[node name="Separator" type="Control" parent="MarginContainer/VBoxContainer"]
+[node name="Separator" type="Control" parent="main_menu_container/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="main_menu_container/VBoxContainer"]
 layout_mode = 2
 text = "MALIGNANT"
 label_settings = ExtResource("2_rfljo")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="main_menu_container"]
 layout_mode = 2
 alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="main_menu_container/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 50
 alignment = 1
 
-[node name="Separator2" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="Separator2" type="Control" parent="main_menu_container/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Separator3" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="Separator3" type="Control" parent="main_menu_container/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Separator4" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="Separator4" type="Control" parent="main_menu_container/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="start_button" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(180, 100)
-layout_mode = 2
-theme_override_font_sizes/font_size = 50
-text = "start tutorial
-"
-
-[node name="start_button2" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="start_button2" type="Button" parent="main_menu_container/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(475, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "start test dungeon"
 
-[node name="exit_button" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="options_button" type="Button" parent="main_menu_container/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(180, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "options"
+
+[node name="exit_button" type="Button" parent="main_menu_container/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(180, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
@@ -95,6 +95,10 @@ text = "leave
 
 [node name="music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_kcj8r")
+
+[node name="options_menu" parent="." instance=ExtResource("4_oomn2")]
+visible = false
+layout_mode = 1
 
 [node name="background" type="Node3D" parent="."]
 

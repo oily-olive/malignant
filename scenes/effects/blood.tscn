@@ -21,6 +21,8 @@ section_length = 0.02
 curve = SubResource("Curve_f0yar")
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
+collision_layer = 0
+collision_mask = 0
 motion_mode = 1
 script = ExtResource("1_geptm")
 

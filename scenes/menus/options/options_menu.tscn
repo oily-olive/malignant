@@ -1,0 +1,74 @@
+[gd_scene load_steps=2 format=3 uid="uid://djimmd8k58vry"]
+
+[ext_resource type="Script" path="res://scripts/utility_scripts/menus/options_menu.gd" id="1_1pdms"]
+
+[node name="options_menu" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+script = ExtResource("1_1pdms")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Control8" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="graphics_button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 35
+text = "Graphics"
+
+[node name="sound_button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 35
+text = "Audio"
+
+[node name="controls_button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 35
+text = "Controls"
+
+[node name="accessibility_button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 35
+text = "Accessibility"
+
+[node name="Control" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Control2" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Control3" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Control4" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Control5" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Control6" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Control7" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="back_button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 35
+text = "Back
+"
