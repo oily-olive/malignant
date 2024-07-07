@@ -1,5 +1,5 @@
 extends MarginContainer
-class_name Options_Menu
+class_name OptionsMenu
 
 @onready var graphics_button = $VBoxContainer/graphics_button as Button
 @onready var sound_button = $VBoxContainer/sound_button as Button
