@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://bdxm02ero8v4g"]
+[gd_scene load_steps=11 format=3 uid="uid://bdxm02ero8v4g"]
 
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_akd54"]
 [ext_resource type="LabelSettings" uid="uid://igg7jl8mx8i2" path="res://label thingies/font_title.tres" id="2_rfljo"]
 [ext_resource type="AudioStream" uid="uid://bpip6j1lxw2ph" path="res://sound/music/main_menu.mp3" id="3_kcj8r"]
 [ext_resource type="PackedScene" uid="uid://djimmd8k58vry" path="res://scenes/menus/options/options_menu.tscn" id="4_oomn2"]
 [ext_resource type="Material" uid="uid://ckfggkfyj815r" path="res://materials/blood_clouds_material.tres" id="4_vuhgc"]
+[ext_resource type="PackedScene" uid="uid://buxwi330om1fi" path="res://scenes/menus/options/keybinds_menu.tscn" id="5_cyuk2"]
 [ext_resource type="Material" uid="uid://bo4fq4d1qd5se" path="res://materials/sky_shader.tres" id="5_egkvu"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_0cbgc"]
@@ -98,6 +99,9 @@ stream = ExtResource("3_kcj8r")
 
 [node name="options_menu" parent="." instance=ExtResource("4_oomn2")]
 visible = false
+layout_mode = 1
+
+[node name="controls_menu" parent="." instance=ExtResource("5_cyuk2")]
 layout_mode = 1
 
 [node name="background" type="Node3D" parent="."]
