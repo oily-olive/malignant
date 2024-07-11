@@ -1,0 +1,60 @@
+[gd_scene load_steps=7 format=3 uid="uid://e5wl6a0s1j4u"]
+
+[ext_resource type="Script" path="res://scripts/utility_scripts/menus/graphics_menu.gd" id="1_qxes1"]
+[ext_resource type="PackedScene" uid="uid://dvq4pgiu2nn0s" path="res://scenes/menus/options/window_mode_button.tscn" id="1_tpg6g"]
+[ext_resource type="PackedScene" uid="uid://df62ioqgokig0" path="res://scenes/menus/options/reset_button.tscn" id="2_l5ttu"]
+[ext_resource type="LabelSettings" uid="uid://c6i5e62bqc3jv" path="res://label thingies/font1.tres" id="3_hgjcs"]
+[ext_resource type="PackedScene" uid="uid://dsegmkujjxhyq" path="res://scenes/menus/options/back_button.tscn" id="3_v00ic"]
+[ext_resource type="PackedScene" uid="uid://bby6y52hddamp" path="res://scenes/menus/options/resolution_mode_button.tscn" id="4_l4cg3"]
+
+[node name="MarginContainer" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 256
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 256
+theme_override_constants/margin_bottom = 32
+script = ExtResource("1_qxes1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="window_mode_button" parent="VBoxContainer" instance=ExtResource("1_tpg6g")]
+layout_mode = 2
+mouse_filter = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Borderless Window"
+label_settings = ExtResource("3_hgjcs")
+
+[node name="Control" type="Control" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CheckBox" type="CheckButton" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="resolution_mode_button" parent="VBoxContainer" instance=ExtResource("4_l4cg3")]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="reset_button" parent="VBoxContainer" instance=ExtResource("2_l5ttu")]
+layout_mode = 2
+
+[node name="back_button" parent="VBoxContainer" instance=ExtResource("3_v00ic")]
+layout_mode = 2
+
+[connection signal="toggled" from="VBoxContainer/HBoxContainer/CheckBox" to="." method="_on_check_box_toggled"]
