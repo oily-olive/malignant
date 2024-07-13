@@ -6,6 +6,7 @@ extends Control
 @onready var options_button = $main_menu_container/HBoxContainer/VBoxContainer/options_button as Button
 @onready var options_menu = $options_menu as OptionsMenu
 @onready var controls_menu = $controls_menu as ControlsMenu
+@onready var graphics_menu = $graphics_menu as GraphicsMenu
 @onready var tutorial = load("res://scenes/tutorial_level.tscn") as PackedScene
 @onready var test_dungeon = load("res://scenes/test_dungeon.tscn") as PackedScene
 @onready var music = $music as AudioStreamPlayer
@@ -34,6 +35,9 @@ func start_options_menu():
 func open_controls_menu():
 	change_menu($controls_menu)
 
+func open_graphics_menu():
+	change_menu($graphics_menu)
+
 func back_to_main():
 	change_menu($main_menu_container)
 
@@ -44,7 +48,9 @@ func connect_buttons():
 	start_button2.button_down.connect(start_testdungeon)
 	options_button.button_down.connect(start_options_menu)
 	options_menu.controls_button.button_down.connect(open_controls_menu)
+	options_menu.graphics_button.button_down.connect(open_graphics_menu)
 	controls_menu.back_button.button_down.connect(start_options_menu)
+	graphics_menu.back_button.button_down.connect(start_options_menu)
 	options_menu.back_button.button_down.connect(back_to_main)
 	exit_button.button_down.connect(leave)
 
